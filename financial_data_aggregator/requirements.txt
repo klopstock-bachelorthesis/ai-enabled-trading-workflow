@@ -1,0 +1,5 @@
+requests
+pandas
+yfinance
+# numpy is often a dependency of pandas, but good to list if directly used elsewhere.
+# argparse is part of standard library for Python 3.2+
