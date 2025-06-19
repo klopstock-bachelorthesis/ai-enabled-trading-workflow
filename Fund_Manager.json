@@ -1,0 +1,1179 @@
+{
+  "name": "Trading System",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        781.5
+      ],
+      "id": "92499321-16ab-4fb9-9071-51a10c4e5f09",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "chatId": "7547027780",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2856,
+        1631.5
+      ],
+      "id": "4fbc833e-f3fb-427e-9690-9efb63b78016",
+      "name": "Telegram",
+      "webhookId": "a2d17f03-a2f8-4fa7-9521-90079f8e1579",
+      "credentials": {
+        "telegramApi": {
+          "id": "0Pm5SrojA01kf5uP",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analysis NVDA: {{ $('Dropbox').item.json.data[0].NVDA_ANALYSIS }}\nAnalysis MSFT: {{ $('Dropbox').item.json.data[2].MSFT_ANALYSIS }}\nAnalysis AAPL: {{ $('Dropbox').item.json.data[4].AAPL_ANALYSIS }}\nCASH: {{ $json.data[1].cash }}\nNVDA: {{ $json.data[1].NVDA }}\nMSFT: {{ $json.data[1].MSFT }}\nMSFT: {{ $json.data[1].MSFT }}\nLast week: {{ $json.data[0].data }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are the portfolio manager of a weekly long/short equity strategy. Produce a clear, five-sentence justification of your final weights for a CIO audience.\",\n  \"context\": \"You are provided with:\\n• A list of assets and their final portfolio weights (long, short, or cash) determined by a risk-adjusted μ/σ score and portfolio constraints (max 50% per asset, cash ≥10%, gross leverage ≤1.0).\\n• Analyst commentary for each asset from separate LLM agents explaining the one-week return outlook based on fundamentals, technicals, and macro context.\",\n  \"output\": \"In five sentences, explain why the weightings align with the analyst views, link each long/short/cash allocation to specific commentary, highlight any key risks or conflicting signals, and provide an overall positioning summary (e.g., defensive, neutral, cautious). Use plain text with numbers, no asterisks.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2480,
+        725
+      ],
+      "id": "547e3c7e-a518-440f-b848-132d8a4638e6",
+      "name": "Fund manager"
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        280,
+        937
+      ],
+      "id": "03128d6d-abb8-47b1-a175-b4df36344d79",
+      "name": "Stock Merger"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "MssUQo02Gy6bwuh1",
+          "mode": "list",
+          "cachedResultName": "BT — MSFT"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        981.5
+      ],
+      "id": "77d3c312-3da2-4175-b266-f66172f3de52",
+      "name": "MSFT"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2568,
+        945
+      ],
+      "id": "657b3612-d7cc-43a3-9eb8-833c2f7c93c3",
+      "name": "Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vRwqF8Nen5jyGl6M",
+          "name": "Google Gemini Free API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "nETVM8zRMSYS1CeR",
+          "mode": "list",
+          "cachedResultName": "BT — AAPL"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        1381.5
+      ],
+      "id": "5a512215-bec7-466d-bc7d-404ac0c4e863",
+      "name": "AAPL"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "7Vb4TwOHsCxRc2DZ",
+          "mode": "list",
+          "cachedResultName": "BT — NVDA"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        581.5
+      ],
+      "id": "8e1af762-8c95-4793-b978-a81d83077c27",
+      "name": "NVDA"
+    },
+    {
+      "parameters": {
+        "jsCode": "const outputItems = [];\n\nfor (let i = 1; i <= 70; i++) {\n  outputItems.push({\n    json: {\n      counter: i\n    }\n  });\n}\n\nreturn outputItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        781.5
+      ],
+      "id": "f2d9d242-d513-44d8-85c8-cbd1f6b76d74",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "batchSize": "=1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -600,
+        781.5
+      ],
+      "id": "dfc49b4c-a83a-420f-9138-6fda2c4fca0b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "chatId": "7547027780",
+        "text": "Done",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        200
+      ],
+      "id": "04e97828-ac49-4d17-98a5-438106d08bc8",
+      "name": "Telegram1",
+      "webhookId": "771c82d8-e79f-43aa-aa4d-c05b08b2b157",
+      "credentials": {
+        "telegramApi": {
+          "id": "JCT1YDRcSpdX1A6V",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "/Apps/trading_n8n/financial_data_aggregator_output/VOLATILITY_1.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        720,
+        1000
+      ],
+      "id": "00ba6442-a507-4b1f-8374-cf692d398755",
+      "name": "Dropbox",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        940,
+        1000
+      ],
+      "id": "9bf41936-ae5a-4870-9dc2-cd6de617cf7f",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Load and parse inputs\nconst ratios = $input.first().json.data\n\n// 2. Sort by descending absolute ratio magnitude, to allocate largest convictions first\nratios.sort((a, b) => Math.abs(b.ratio) - Math.abs(a.ratio));\n\n// 3. Initialize portfolio with 10% cash and zero allocations for every stock\nlet portfolio = {};\nratios.forEach(({ symbol }) => {\n  portfolio[symbol] = 0;\n});\nlet remaining = 1;\n\n// 4. Allocate to each ticker in order, long or short allowed, capped at ±50% and remaining capital\nfor (const { symbol, ratio } of ratios) {\n  if (remaining <= 0) break;\n  // desired allocation can be negative (short) or positive (long)\n  let desired = ratio;\n  // cap at ±50%\n  if (desired > 0.50) desired = 0.50;\n  if (desired < -0.50) desired = -0.50;\n  // cap by remaining absolute capital\n  const alloc = Math.sign(desired) * Math.min(Math.abs(desired), remaining);\n  portfolio[symbol] = alloc;\n  remaining -= Math.abs(alloc);\n}\n\n// 5. Return any leftover into cash\nportfolio.cash = remaining;\n\nreturn portfolio;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1820,
+        1000
+      ],
+      "id": "ceee0d32-6d21-4434-a9c2-9c040a9aa0b6",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/PORTFOLIO_{{ $('Loop Over Items').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2856,
+        675
+      ],
+      "id": "699b40c2-0702-4293-8796-00506ed69045",
+      "name": "Dropbox1",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/PORTFOLIO_{{ $json.counter - 1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        340
+      ],
+      "id": "d21fb4ac-a876-4baf-81c5-66513d3e056b",
+      "name": "Dropbox2",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        350
+      ],
+      "id": "7e4f90b7-641b-4a14-b0e7-e053a28366e9",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2040,
+        725
+      ],
+      "id": "9e83a068-c413-4e76-b53d-4205ac4bfdf7",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        725
+      ],
+      "id": "d07b3529-7bab-4be9-aec9-32640e85d6d7",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_ANALYSIS_{{ $('Loop Over Items').item.json.counter }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        500
+      ],
+      "id": "3fb1932d-20ea-4fb2-b83f-6ec63cd0ec21",
+      "name": "Dropbox3",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "NVDA_ANALYSIS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        60,
+        500
+      ],
+      "id": "04d1de74-e7a0-4fc1-8a6e-214854b78b92",
+      "name": "Extract from File2"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/MSFT_ANALYSIS_{{ $('Loop Over Items').item.json.counter }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        900
+      ],
+      "id": "0a68aa43-85e0-4742-9f9e-9cffb0ec1dbb",
+      "name": "Dropbox4",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "MSFT_ANALYSIS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        60,
+        900
+      ],
+      "id": "9f6502e7-8564-444b-a368-12df4ad197d9",
+      "name": "Extract from File3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_ANALYSIS_{{ $('Loop Over Items').item.json.counter }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        1300
+      ],
+      "id": "772f8cba-108b-44d0-8cb6-749152500d81",
+      "name": "Dropbox5",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "AAPL_ANALYSIS",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        60,
+        1300
+      ],
+      "id": "6d4416e4-8c02-4aa9-97ac-91af198c67c0",
+      "name": "Extract from File4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3076,
+        675
+      ],
+      "id": "de15918b-1b32-440c-9e17-6384929ceeec",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_PREDICTED_RETURN_{{ $('Loop Over Items').item.json.counter }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        700
+      ],
+      "id": "46c304a2-2173-4dbf-9329-7f7fbdead917",
+      "name": "Dropbox6",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "NVDA_EXPECTED_RETURN",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        60,
+        700
+      ],
+      "id": "59bda3fc-1380-4525-9090-c3dd2f460615",
+      "name": "Extract from File5"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/MSFT_PREDICTED_RETURN_{{ $('Loop Over Items').item.json.counter }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        1100
+      ],
+      "id": "b9ce982e-a0af-4c80-85e0-912bfff96073",
+      "name": "Dropbox7",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "MSFT_EXPECTED_RETURN",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        60,
+        1100
+      ],
+      "id": "563af610-9141-4a29-b392-b93d296f8407",
+      "name": "Extract from File6"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_PREDICTED_RETURN_{{ $('Loop Over Items').item.json.counter }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        1500
+      ],
+      "id": "e18294c4-871d-4a2f-a0fe-5624d9bbdccd",
+      "name": "Dropbox8",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "AAPL_EXPECTED_RETURN",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        60,
+        1500
+      ],
+      "id": "d579095a-83c4-4685-afcb-43990a041631",
+      "name": "Extract from File7"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        500,
+        1000
+      ],
+      "id": "92b45d95-53d6-4b76-91c3-69de82bea940",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        1000
+      ],
+      "id": "264b58c7-a5d9-4b1d-84b5-827ec96d6cc5",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const dropboxData = $('Dropbox').first().json.data;\nconst inputData = $input.first().json.data[0];\n\nconst results = [\n  {\n    json: {\n      symbol: 'NVDA',\n      ratio: dropboxData[1].NVDA_EXPECTED_RETURN / $input.first().json.data[0].WeeklyVolatility\n    }\n  },\n  {\n    json: {\n      symbol: 'MSFT',\n      ratio: dropboxData[3].MSFT_EXPECTED_RETURN / $input.first().json.data[1].WeeklyVolatility\n    }\n  },\n  {\n    json: {\n      symbol: 'AAPL',\n      ratio: dropboxData[5].AAPL_EXPECTED_RETURN / $input.first().json.data[2].WeeklyVolatility\n    }\n  }\n];\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        1000
+      ],
+      "id": "c0c65771-2fc9-49c5-98d3-8f6369fa8d14",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        1000
+      ],
+      "id": "77f1ba78-791b-4e4a-a7b6-fc991113142d",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1cze_WIMVU-spduN4tNP79nPgXhxGZzucd5OFLq48RGQ",
+          "mode": "list",
+          "cachedResultName": "n8n Bachelorthesis",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cze_WIMVU-spduN4tNP79nPgXhxGZzucd5OFLq48RGQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cze_WIMVU-spduN4tNP79nPgXhxGZzucd5OFLq48RGQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Cash ": "={{ $json.cash }}",
+            "NVDA": "={{ $json.NVDA }}",
+            "AAPL": "={{ $json.AAPL }}",
+            "MSFT": "={{ $json.MSFT }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Cash ",
+              "displayName": "Cash ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NVDA",
+              "displayName": "NVDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "MSFT",
+              "displayName": "MSFT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AAPL",
+              "displayName": "AAPL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2080,
+        1180
+      ],
+      "id": "e315ed53-a5eb-4010-911b-fd8a6fd0aa97",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jjq229aGftCLpnWE",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        1180
+      ],
+      "id": "4c76f335-5388-4728-85db-71f83ee5da1c",
+      "name": "No Operation, do nothing1"
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Test workflow’": [
+      {
+        "json": {}
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fund manager": {
+      "main": [
+        [
+          {
+            "node": "Dropbox1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stock Merger": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSFT": {
+      "main": [
+        [
+          {
+            "node": "Dropbox4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Fund manager",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AAPL": {
+      "main": [
+        [
+          {
+            "node": "Dropbox5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NVDA": {
+      "main": [
+        [
+          {
+            "node": "Dropbox3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AAPL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "MSFT",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NVDA",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Fund manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox3": {
+      "main": [
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        [
+          {
+            "node": "Stock Merger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox4": {
+      "main": [
+        [
+          {
+            "node": "Extract from File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox5": {
+      "main": [
+        [
+          {
+            "node": "Extract from File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File4": {
+      "main": [
+        [
+          {
+            "node": "Stock Merger",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Extract from File3": {
+      "main": [
+        [
+          {
+            "node": "Stock Merger",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Dropbox6": {
+      "main": [
+        [
+          {
+            "node": "Extract from File5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox7": {
+      "main": [
+        [
+          {
+            "node": "Extract from File6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox8": {
+      "main": [
+        [
+          {
+            "node": "Extract from File7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File5": {
+      "main": [
+        [
+          {
+            "node": "Stock Merger",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract from File6": {
+      "main": [
+        [
+          {
+            "node": "Stock Merger",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Extract from File7": {
+      "main": [
+        [
+          {
+            "node": "Stock Merger",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Dropbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f295a580-52ac-4769-a2ee-d25c3070d6f7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2ae2c89981039340d829937460d45406e20e1fe8706abd573e37b0e7483da8c4"
+  },
+  "id": "7adcowAu62H2OMkg",
+  "tags": []
+}

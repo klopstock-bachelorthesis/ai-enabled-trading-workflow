@@ -1,0 +1,1631 @@
+{
+  "name": "AAPL",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        240
+      ],
+      "id": "238e0b85-236e-494c-bccc-f798408d19be",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -135
+      ],
+      "id": "d46d52d8-0e1c-4b98-8b6d-0e3b35b4b520",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        -135
+      ],
+      "id": "0bf34f2e-4f82-4430-8b98-cf7f4efe847d",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        865
+      ],
+      "id": "5dc636b3-05e9-4f2c-aac2-b9e4dd232aae",
+      "name": "Extract from File2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        865
+      ],
+      "id": "f898c68c-0008-405d-80a1-c4e5805223fe",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/AAPL_TA_{{ $json.counter }}.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        865
+      ],
+      "id": "5e70cbaa-a224-459b-816a-3e3b25ab9657",
+      "name": "Dropbox",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/AAPL_NEWS_{{ $json.counter }}.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        240
+      ],
+      "id": "e1865205-db95-4ea5-b8f7-2e576e20a7b3",
+      "name": "Dropbox1",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/AAPL_{{ $json.counter }}.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -135
+      ],
+      "id": "0a5994d7-7d42-4d65-b8ea-0595895fb302",
+      "name": "Dropbox2",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Previous analysis: {{ $json.data[0].data }}\n\nFundamental data:\n• Symbol: {{ $json.data[1].data[0].Symbol }}\n• Asset Type: {{ $json.data[1].data[0].AssetType }}\n• Name: {{ $json.data[1].data[0].Name }}\n• Description: {{ $json.data[1].data[0].Description }}\n• CIK: {{ $json.data[1].data[0].CIK }}\n• Exchange: {{ $json.data[1].data[0].Exchange }}\n• Currency: {{ $json.data[1].data[0].Currency }}\n• Country: {{ $json.data[1].data[0].Country }}\n• Sector: {{ $json.data[1].data[0].Sector }}\n• Industry: {{ $json.data[1].data[0].Industry }}\n• Address: {{ $json.data[1].data[0].Address }}\n• Official Site: {{ $json.data[1].data[0].OfficialSite }}\n• Fiscal Year End: {{ $json.data[1].data[0].FiscalYearEnd }}\n• Latest Quarter: {{ $json.data[1].data[0].LatestQuarter }}\n• Market Capitalization: {{ $json.data[1].data[0].MarketCapitalization }}\n• EBITDA: {{ $json.data[1].data[0].EBITDA }}\n• P/E Ratio: {{ $json.data[1].data[0].PERatio }}\n• PEG Ratio: {{ $json.data[1].data[0].PEGRatio }}\n• Book Value: {{ $json.data[1].data[0].BookValue }}\n• Dividend Per Share: {{ $json.data[1].data[0].DividendPerShare }}\n• Dividend Yield: {{ $json.data[1].data[0].DividendYield }}\n• EPS: {{ $json.data[1].data[0].EPS }}\n• Revenue Per Share (TTM): {{ $json.data[1].data[0].RevenuePerShareTTM }}\n• Profit Margin: {{ $json.data[1].data[0].ProfitMargin }}\n• Operating Margin (TTM): {{ $json.data[1].data[0].OperatingMarginTTM }}\n• Return on Assets (TTM): {{ $json.data[1].data[0].ReturnOnAssetsTTM }}\n• Return on Equity (TTM): {{ $json.data[1].data[0].ReturnOnEquityTTM }}\n• Revenue (TTM): {{ $json.data[1].data[0].RevenueTTM }}\n• Gross Profit (TTM): {{ $json.data[1].data[0].GrossProfitTTM }}\n• Diluted EPS (TTM): {{ $json.data[1].data[0].DilutedEPSTTM }}\n• Quarterly Earnings Growth YOY: {{ $json.data[1].data[0].QuarterlyEarningsGrowthYOY }}\n• Quarterly Revenue Growth YOY: {{ $json.data[1].data[0].QuarterlyRevenueGrowthYOY }}\n• Analyst Target Price: {{ $json.data[1].data[0].AnalystTargetPrice }}\n• Trailing P/E: {{ $json.data[1].data[0].TrailingPE }}\n• Forward P/E: {{ $json.data[1].data[0].ForwardPE }}\n• Price-to-Sales (TTM): {{ $json.data[1].data[0].PriceToSalesRatioTTM }}\n• Price-to-Book Ratio: {{ $json.data[1].data[0].PriceToBookRatio }}\n• EV/Revenue: {{ $json.data[1].data[0].EVToRevenue }}\n• EV/EBITDA: {{ $json.data[1].data[0].EVToEBITDA }}\n• Beta: {{ $json.data[1].data[0].Beta }}\n• Shares Outstanding: {{ $json.data[1].data[0].SharesOutstanding }}\n• Dividend Date: {{ $json.data[1].data[0].DividendDate }}\n• Ex-Dividend Date: {{ $json.data[1].data[0].ExDividendDate }}\n• Fiscal Date Ending: {{ $json.data[1].data[0].fiscalDateEnding }}\n• Reported Currency: {{ $json.data[1].data[0].reportedCurrency }}\n• Gross Profit: {{ $json.data[1].data[0].grossProfit }}\n• Total Revenue: {{ $json.data[1].data[0].totalRevenue }}\n• Cost of Revenue: {{ $json.data[1].data[0].costOfRevenue }}\n• Cost of Goods Sold: {{ $json.data[1].data[0].costofGoodsAndServicesSold }}\n• Operating Income: {{ $json.data[1].data[0].operatingIncome }}\n• Selling, General & Administrative: {{ $json.data[1].data[0].sellingGeneralAndAdministrative }}\n• Research & Development: {{ $json.data[1].data[0].researchAndDevelopment }}\n• Operating Expenses: {{ $json.data[1].data[0].operatingExpenses }}\n• Investment Income Net: {{ $json.data[1].data[0].investmentIncomeNet }}\n• Net Interest Income: {{ $json.data[1].data[0].netInterestIncome }}\n• Interest Income: {{ $json.data[1].data[0].interestIncome }}\n• Interest Expense: {{ $json.data[1].data[0].interestExpense }}\n• Non-Interest Income: {{ $json.data[1].data[0].nonInterestIncome }}\n• Other Non-Operating Income: {{ $json.data[1].data[0].otherNonOperatingIncome }}\n• Depreciation: {{ $json.data[1].data[0].depreciation }}\n• Depreciation & Amortization: {{ $json.data[1].data[0].depreciationAndAmortization }}\n• Income Before Tax: {{ $json.data[1].data[0].incomeBeforeTax }}\n• Income Tax Expense: {{ $json.data[1].data[0].incomeTaxExpense }}\n• Interest & Debt Expense: {{ $json.data[1].data[0].interestAndDebtExpense }}\n• Net Income from Continuing Ops: {{ $json.data[1].data[0].netIncomeFromContinuingOperations }}\n• Comprehensive Income Net of Tax: {{ $json.data[1].data[0].comprehensiveIncomeNetOfTax }}\n• EBIT: {{ $json.data[1].data[0].ebit }}\n• EBITDA: {{ $json.data[1].data[0].ebitda }}\n• Net Income: {{ $json.data[1].data[0].netIncome }}\n• Total Assets: {{ $json.data[1].data[0].totalAssets }}\n• Total Current Assets: {{ $json.data[1].data[0].totalCurrentAssets }}\n• Cash & Cash Equivalents: {{ $json.data[1].data[0].cashAndCashEquivalentsAtCarryingValue }}\n• Cash & Short-Term Investments: {{ $json.data[1].data[0].cashAndShortTermInvestments }}\n• Inventory: {{ $json.data[1].data[0].inventory }}\n• Current Net Receivables: {{ $json.data[1].data[0].currentNetReceivables }}\n• Total Non-Current Assets: {{ $json.data[1].data[0].totalNonCurrentAssets }}\n• Property, Plant & Equipment: {{ $json.data[1].data[0].propertyPlantEquipment }}\n• Accumulated Depreciation PPE: {{ $json.data[1].data[0].accumulatedDepreciationAmortizationPPE }}\n• Intangible Assets: {{ $json.data[1].data[0].intangibleAssets }}\n• Intangible Assets Excl. Goodwill: {{ $json.data[1].data[0].intangibleAssetsExcludingGoodwill }}\n• Goodwill: {{ $json.data[1].data[0].goodwill }}\n• Investments: {{ $json.data[1].data[0].investments }}\n• Long-Term Investments: {{ $json.data[1].data[0].longTermInvestments }}\n• Short-Term Investments: {{ $json.data[1].data[0].shortTermInvestments }}\n• Other Current Assets: {{ $json.data[1].data[0].otherCurrentAssets }}\n• Other Non-Current Assets: {{ $json.data[1].data[0].otherNonCurrentAssets }}\n• Total Liabilities: {{ $json.data[1].data[0].totalLiabilities }}\n• Total Current Liabilities: {{ $json.data[1].data[0].totalCurrentLiabilities }}\n• Current Accounts Payable: {{ $json.data[1].data[0].currentAccountsPayable }}\n• Deferred Revenue: {{ $json.data[1].data[0].deferredRevenue }}\n• Current Debt: {{ $json.data[1].data[0].currentDebt }}\n• Short-Term Debt: {{ $json.data[1].data[0].shortTermDebt }}\n• Total Non-Current Liabilities: {{ $json.data[1].data[0].totalNonCurrentLiabilities }}\n• Capital Lease Obligations: {{ $json.data[1].data[0].capitalLeaseObligations }}\n• Long-Term Debt: {{ $json.data[1].data[0].longTermDebt }}\n• Current Long-Term Debt: {{ $json.data[1].data[0].currentLongTermDebt }}\n• Long-Term Debt Non-Current: {{ $json.data[1].data[0].longTermDebtNoncurrent }}\n• Short+Long-Term Debt Total: {{ $json.data[1].data[0].shortLongTermDebtTotal }}\n• Other Current Liabilities: {{ $json.data[1].data[0].otherCurrentLiabilities }}\n• Other Non-Current Liabilities: {{ $json.data[1].data[0].otherNonCurrentLiabilities }}\n• Total Shareholder Equity: {{ $json.data[1].data[0].totalShareholderEquity }}\n• Treasury Stock: {{ $json.data[1].data[0].treasuryStock }}\n• Retained Earnings: {{ $json.data[1].data[0].retainedEarnings }}\n• Common Stock: {{ $json.data[1].data[0].commonStock }}\n• Common Stock Shares Outstanding: {{ $json.data[1].data[0].commonStockSharesOutstanding }}\n• Operating Cash Flow: {{ $json.data[1].data[0].operatingCashflow }}\n• Payments for Operating Activities: {{ $json.data[1].data[0].paymentsForOperatingActivities }}\n• Proceeds from Operating Activities: {{ $json.data[1].data[0].proceedsFromOperatingActivities }}\n• Change in Operating Liabilities: {{ $json.data[1].data[0].changeInOperatingLiabilities }}\n• Change in Operating Assets: {{ $json.data[1].data[0].changeInOperatingAssets }}\n• Depreciation, Depletion & Amortization: {{ $json.data[1].data[0].depreciationDepletionAndAmortization }}\n• Capital Expenditures: {{ $json.data[1].data[0].capitalExpenditures }}\n• Change in Receivables: {{ $json.data[1].data[0].changeInReceivables }}\n• Change in Inventory: {{ $json.data[1].data[0].changeInInventory }}\n• Profit/Loss: {{ $json.data[1].data[0].profitLoss }}\n• Cash Flow from Investment: {{ $json.data[1].data[0].cashflowFromInvestment }}\n• Cash Flow from Financing: {{ $json.data[1].data[0].cashflowFromFinancing }}\n• Proceeds from Repayments of Short-Term Debt: {{ $json.data[1].data[0].proceedsFromRepaymentsOfShortTermDebt }}\n• Payments for Repurchase of Common Stock: {{ $json.data[1].data[0].paymentsForRepurchaseOfCommonStock }}\n• Payments for Repurchase of Equity: {{ $json.data[1].data[0].paymentsForRepurchaseOfEquity }}\n• Payments for Repurchase of Preferred Stock: {{ $json.data[1].data[0].paymentsForRepurchaseOfPreferredStock }}\n• Dividend Payout: {{ $json.data[1].data[0].dividendPayout }}\n• Dividend Payout Common Stock: {{ $json.data[1].data[0].dividendPayoutCommonStock }}\n• Dividend Payout Preferred Stock: {{ $json.data[1].data[0].dividendPayoutPreferredStock }}\n• Proceeds from Issuance of Common Stock: {{ $json.data[1].data[0].proceedsFromIssuanceOfCommonStock }}\n• Proceeds from Issuance of Long-Term Debt & Capital Securities: {{ $json.data[1].data[0].proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet }}\n• Proceeds from Issuance of Preferred Stock: {{ $json.data[1].data[0].proceedsFromIssuanceOfPreferredStock }}\n• Proceeds from Repurchase of Equity: {{ $json.data[1].data[0].proceedsFromRepurchaseOfEquity }}\n• Proceeds from Sale of Treasury Stock: {{ $json.data[1].data[0].proceedsFromSaleOfTreasuryStock }}\n• Change in Cash and Cash Equivalents: {{ $json.data[1].data[0].changeInCashAndCashEquivalents }}\n• Change in Exchange Rate: {{ $json.data[1].data[0].changeInExchangeRate }}\n• Reported EPS: {{ $json.data[1].data[0].reportedEPS }}\n\n\n",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a seasoned financial analyst with expertise in parsing CSV-formatted annual financial data to deliver high-impact fundamental company evaluations.\",\n  \"context\": \"The CSV file includes: Company overview and business description; Key valuation and performance ratios (P/E ratio, profit margin, ROE, etc.); Most recent annual financial statements (income statement, balance sheet, cash flow); Latest earnings per share (EPS). Treat missing values as “not available” and assume all figures are in USD and annual.\",\n  \"output\": \"Produce a concise fundamental analysis in exactly five sentences, structured under these subheadings: 1. Business Model & Market Position; 2. Financial Strengths & Weaknesses; 3. Trends in Profitability, Liquidity & Solvency; 4. Valuation Assessment (fairly valued, overvalued, or undervalued based on P/E and ROE); 5. Investment Outlook (bullish, neutral, or bearish and why).\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2400,
+        -460
+      ],
+      "id": "c9cff59f-adc4-4cfa-bb1a-731ecdba8521",
+      "name": "Fundamental Analyst"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Previous bull analysis: {{ $json.data[0].data }}\nSummaries: {{ $json.data[1].text }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a financial news analyst whose role is to make a bullish short-term case (next 5–7 trading days) for a specific stock based on recent news articles.\",\n  \"context\": \"You will receive a list of summarized news articles. From these, extract and highlight positive developments, sentiment, or market-moving events that could support a rise in the stock price. Ignore or downplay neutral or negative signals unless necessary for context.\",\n  \"input\": \"An array of 50 summarized news articles from the current week\",\n  \"output\": \"• A short list (2–3 bullets) of the most supportive headlines or developments\\n• A summary statement explaining why these developments are likely to lead to positive price action this week\\n• A bullish short-term sentiment rating (Strongly Bullish, Moderately Bullish, or Cautiously Bullish)\\n\\nUse exactly five sentences in total.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        3436,
+        -60
+      ],
+      "id": "4ee21a58-495b-4d02-9b36-dd4e065f7b47",
+      "name": "Bull analyst"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Previous bear analysis: {{ $json.data[0].data }}\nSummaries: {{ $json.data[1].text }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a financial news analyst whose role is to make a bearish short-term case (next 5–7 trading days) for a specific stock based on recent news articles.\",\n  \"context\": \"You will receive a list of summarized news articles. From these, extract and highlight negative developments, risks, or market sentiment that could lead to downward pressure on the stock. Ignore or downplay positive news unless necessary for contrast.\",\n  \"input\": \"An array of 50 summarized news articles from the current week\",\n  \"output\": \"• A short list (2–3 bullets) of the most concerning or negative headlines\\n• A summary statement explaining why these developments are likely to lead to negative price action this week\\n• A bearish short-term sentiment rating (Strongly Bearish, Moderately Bearish, or Cautiously Bearish)\\n\\nUse exactly five sentences in total.\"\n}\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        3436,
+        490
+      ],
+      "id": "87ea2c8a-2ed5-454a-845a-1ea9a43ebb2f",
+      "name": "Bear analyst"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a technical trading strategist agent. Your job is to analyze the provided technical indicator data and deliver a single price target for the end of the next trading week, along with a buy, hold, or sell recommendation.\",\n  \"context\": \"You will receive a CSV table of daily technical indicators for a stock, including:\\n\\n• RSI (Relative Strength Index): you know that RSI above 70 signals overbought conditions and potential pullback, RSI below 30 signals oversold conditions and potential rebound. Readings between 50–70 suggest bullish momentum, while readings between 30–50 suggest bearish momentum.\\n\\n• MACD (Moving Average Convergence Divergence) and its signal line: you understand that when the MACD line crosses above its signal line, it indicates bullish momentum and a buy signal; when it crosses below, it indicates bearish momentum and a sell signal. You also recognize divergences between price and MACD as early reversal clues, and you interpret the MACD histogram’s expansion/contraction as momentum strength.\\n\\n• Bollinger Bands (upper and lower): you know that price touching or breaking the upper band can indicate overbought conditions, while touching or breaking the lower band can indicate oversold conditions. You interpret a Bollinger Band “squeeze” (narrow band width) as a period of low volatility often followed by a strong directional breakout, and an expanding band width as confirmation of a volatility breakout.\\n\\n• Volume: you recognize that rising volume accompanying price moves confirms the strength of the move, while divergences (e.g., price rising on falling volume) warn of potential exhaustion. You also watch for volume spikes that may mark capitulation or institutional activity.\",\n  \"input\": \"A CSV file or array of objects with columns: date, close, RSI, MACD, MACD_signal, Bollinger_middle, Bollinger_upper, Bollinger_lower, volume.\",\n  \"output\": \"Provide exactly two items:\\n1. A single numerical percentage gain/ loss traget for the stock at the close of the coming trading week.\\n2. A clear recommendation: BUY, HOLD, or SELL, with a short rationale referencing the key technical signals.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2400,
+        890
+      ],
+      "id": "3be254ae-4d8c-4144-a9c7-ca0eea0822bc",
+      "name": "Technical analyst"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        240
+      ],
+      "id": "6bb234b4-c5fc-4af7-8b7f-8dbb883bbb0e",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        440
+      ],
+      "id": "930191d7-5471-4e43-aa49-437096113a52",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2478,
+        240
+      ],
+      "id": "eac87a07-a2f3-4674-9b63-e766c2dbc3c9",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3812,
+        148
+      ],
+      "id": "a8eb6aed-18af-4e53-bae1-27f9550e01b6",
+      "name": "Analyst merger"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3524,
+        160
+      ],
+      "id": "472eebb0-4076-4454-b345-a5692874a904",
+      "name": "Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2488,
+        -240
+      ],
+      "id": "9ba6a177-6c5a-4912-9bc0-802d861951f5",
+      "name": "Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3524,
+        710
+      ],
+      "id": "edb86da7-b314-4cbd-b425-417eb1620441",
+      "name": "Gemini2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2488,
+        1110
+      ],
+      "id": "3801db3f-d937-4b28-ab31-49e6ff5d81be",
+      "name": "Gemini3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "instructions": "Transform all outputs given to you into one single text.",
+        "codeGeneratedForPrompt": "Transform all outputs given to you into one single text.",
+        "jsCode": "const items = $input.all();\nconst text = items.map((item) => item?.json?.output).join(\"\\n\");\nreturn { text };\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        2776,
+        240
+      ],
+      "id": "38233b10-2faf-4738-ab52-14cd610e9a0f",
+      "name": "Transformer Node2"
+    },
+    {
+      "parameters": {
+        "instructions": "Please split half of the items provided to output 1 and the other half to output 2",
+        "codeGeneratedForPrompt": "Please split half of the items provided to output 1 and the other half to output 2",
+        "jsCode": "const items = $input.all();\nconst half = Math.ceil(items.length / 2);\n\nconst output1 = items.slice(0, half);\nconst output2 = items.slice(half);\n\nreturn { output1, output2 };\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        240
+      ],
+      "id": "fe0efd2f-2683-4e31-9c85-cd78643b290a",
+      "name": "Transformer Node1"
+    },
+    {
+      "parameters": {
+        "instructions": "Transform all outputs given to you into one single text.",
+        "codeGeneratedForPrompt": "Transform all outputs given to you into one single text.",
+        "jsCode": "const items = $input.all();\nconst text = items.map((item) => item?.json?.output).join(\"\\n\");\nreturn { text };\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        4032,
+        169
+      ],
+      "id": "ef8a6367-a499-41e6-ad47-5499530c3e53",
+      "name": "Transformer Node3"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "aGI3XSPWaRPeDhVA",
+          "mode": "list",
+          "cachedResultName": "BT — AAPL Summary Analyst I"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2180,
+        240
+      ],
+      "id": "80487103-ffd6-48e1-9444-61fa697cd130",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "CXKl5LPt6Nv3BVOG",
+          "mode": "list",
+          "cachedResultName": "BT — AAPL Summary Analyst II"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2180,
+        440
+      ],
+      "id": "44d81b7d-0e8a-460c-8cf2-efad14fe2d64",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a stock synthesis agent tasked with integrating insights from four specialized analyses to produce a unified outlook and one-week expected return.\",\n  \"context\": \"You will receive outputs from four preceding agents:\\n• Fundamental analysis: concise key strengths, weaknesses, and valuation view.\\n• Technical analysis: chart patterns, trend signals, and momentum assessment.\\n• Bull case: most supportive recent news developments and bullish sentiment rating.\\n• Bear case: most concerning recent news developments and bearish sentiment rating.\",\n  \"input\": {\n    \"fundamental\": { \"summary\": \"string\" },\n    \"technical\": { \"summary\": \"string\" },\n    \"bull_case\": { \"bullets\": [\"string\"], \"summary\": \"string\", \"sentiment\": \"string\" },\n    \"bear_case\": { \"bullets\": [\"string\"], \"summary\": \"string\", \"sentiment\": \"string\" }\n  },\n  \"output\": \"Provide:\\n1. A cohesive one-paragraph synthesis highlighting how fundamental and technical factors combine with bullish and bearish news to shape the outlook.\\n2. A balanced assessment of risks and catalysts.\\n3. A single numeric expected return for the next 5–7 trading days (as a percentage).\\nAnswer in plain text, with the expected return clearly stated at the end.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4260,
+        160
+      ],
+      "id": "3998ecda-6873-42cf-a299-8ddeaac88869",
+      "name": "Stock Synthesis Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4340,
+        389
+      ],
+      "id": "f93d61b5-f3cc-4e5b-ada6-8a35104983e0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -360
+      ],
+      "id": "1c3c2457-64b5-4707-94f3-88379fbcf530",
+      "name": "Dropbox4",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        -360
+      ],
+      "id": "7bc3e81e-a931-4735-9ae8-4d7614e50d37",
+      "name": "Extract from File3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1960,
+        -360
+      ],
+      "id": "1a16da03-5bb9-4025-81f9-3bf4c132b3d4",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        -360
+      ],
+      "id": "a1f7b184-974c-4a3f-b7da-2398bfe730e8",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2776,
+        -360
+      ],
+      "id": "f90772b6-99ac-4d36-a179-57bb753b714c",
+      "name": "Dropbox5",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1080,
+        229.5
+      ],
+      "id": "9c23a136-c68d-4a40-ace7-17d1582a07f0",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_BULL_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2478,
+        40
+      ],
+      "id": "5d27af10-b01e-4723-965f-5af4dcd50a79",
+      "name": "Dropbox6",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2776,
+        40
+      ],
+      "id": "0c18a7fd-10b3-4fe6-8b12-ea0e5c4941b2",
+      "name": "Extract from File4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3000,
+        40
+      ],
+      "id": "4b4160b6-582a-4b70-9511-642cd68fbb7d",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3216,
+        40
+      ],
+      "id": "73940193-a179-4de9-b86d-d79f48df6963",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_BEAR_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2478,
+        590
+      ],
+      "id": "4feafc5c-97fb-42ef-b4d3-1228e84be76b",
+      "name": "Dropbox7",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2776,
+        590
+      ],
+      "id": "25fa04be-de0e-474e-a6c3-06d99bdbd9aa",
+      "name": "Extract from File5"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3220,
+        500
+      ],
+      "id": "cbc8823b-e99c-41f8-8436-52e16a1a564b",
+      "name": "Aggregate4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2996,
+        490
+      ],
+      "id": "ae684796-cfbc-484d-ba0d-d4e0875fbcda",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_BULL_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        3812,
+        390
+      ],
+      "id": "cec2c4eb-615e-454a-8601-c8b45848171c",
+      "name": "Dropbox8",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_BEAR_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        3812,
+        790
+      ],
+      "id": "c4b1bea8-e530-4448-b10c-48670e1cfee2",
+      "name": "Dropbox9",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_TA_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        1090
+      ],
+      "id": "4960466d-641f-4ea7-b9eb-9d35e19f1270",
+      "name": "Dropbox10",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        1090
+      ],
+      "id": "150dd582-f74b-49f9-8231-1311fbb73c9f",
+      "name": "Extract from File6"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1960,
+        890
+      ],
+      "id": "0eb9a7cd-33f8-412b-a18d-cf6271ca9552",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        890
+      ],
+      "id": "27e453c4-4f14-4ffd-ab0e-a9042c148f4f",
+      "name": "Aggregate5"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_TA_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2776,
+        1040
+      ],
+      "id": "95a53b54-3f0f-487c-beab-e7d660d99149",
+      "name": "Dropbox11",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4032,
+        390
+      ],
+      "id": "a41b0ec0-63ac-4783-b24f-91c5af947f3c",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2996,
+        1040
+      ],
+      "id": "e6017d6c-37c0-4bcf-a1d9-50853e545003",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4032,
+        790
+      ],
+      "id": "1fbce074-2b55-45f1-a85d-24983faf73cb",
+      "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3000,
+        -360
+      ],
+      "id": "adfd8527-30f0-4ef4-9090-846140c9d634",
+      "name": "No Operation, do nothing3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_ANALYSIS_{{ $('When Executed by Another Workflow').first().json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        4620,
+        20
+      ],
+      "id": "3465c6a8-1a46-4b5c-b41f-d31ef4312a58",
+      "name": "Dropbox3",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "Please analyze the user message and give as output solely the expected return (Format: e.g. 0.010 instead of 1%)"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4600,
+        260
+      ],
+      "id": "06f7c69e-723b-49b4-8f75-fc218c22f2c0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4660,
+        460
+      ],
+      "id": "e1c8ae97-a0fc-4730-8ca4-331492a2bad3",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/AAPL_PREDICTED_RETURN_{{ $('When Executed by Another Workflow').first().json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        4940,
+        260
+      ],
+      "id": "3e8e7ab3-7bb4-4938-9403-a23797c1ec4c",
+      "name": "Dropbox12",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        5120,
+        260
+      ],
+      "id": "5faeaeff-e215-42da-b285-87ce2de30b5b",
+      "name": "No Operation, do nothing5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4840,
+        20
+      ],
+      "id": "10b7f272-337a-44b4-a6f3-94a2ec4115e9",
+      "name": "No Operation, do nothing4"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "counter": 1
+        }
+      }
+    ],
+    "Merge2": [
+      {
+        "json": {
+          "data": "This is the first week of testing. There is no portfolio set up and no prior bullish analysis on AAPL yet, so all decisions you make are with a fresh mind.\n"
+        }
+      },
+      {
+        "json": {
+          "text": "```json\n[\n  {\n    \"title\": \"Apple Might Finally Launch Beats Solo4 After Eight-Year Wait At The Same Price As Its Predecessor - Apple (NASDAQ:AAPL)\",\n    \"summary\": \"Apple is expected to release the Beats Solo4 headphones on May 2, with new features and a price of $199.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"1 \\\"Magnificent Seven\\\" Stock to Buy Hand Over Fist in April, and 1 to Avoid Like the Plague\",\n    \"summary\": \"The article suggests that among the \\\"Magnificent Seven\\\" stocks (Microsoft, Apple, Nvidia, Alphabet, Amazon, Meta Platforms, and Tesla), one is undervalued and a strong buy, while another has concerning issues and should be avoided.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Should Vanguard Russell 1000 Growth ETF  ( VONG )  Be on Your Investing Radar?\",\n    \"summary\": \"This article is a Style Box ETF report for the Vanguard Russell 1000 Growth ETF (VONG).\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Should WisdomTree U.S. LargeCap Dividend ETF  ( DLN )  Be on Your Investing Radar?\",\n    \"summary\": \"This article is a Style Box ETF report for the WisdomTree U.S. LargeCap Dividend ETF (DLN).\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Apple Allows iPhone Users To Download Apps From Developer Websites In EU With Latest iOS 17.5 Beta Update - Apple (NASDAQ:AAPL)\",\n    \"summary\": \"Apple's iOS 17.5 beta update allows users in the European Union to download apps directly from developer websites.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"3 Victory Capital Mutual Funds for Steady Returns\",\n    \"summary\": \"The article suggests investing in Victory Capital mutual funds RSGGX, MAIMX, and VDSRX for access to diverse and competitively priced investment options.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Stocks Reverse Higher Ahead Of Powell Speech; Nvidia Up Despite Taiwan Quake As Tesla Falls\",\n    \"summary\": \"Stocks are rebounding ahead of a speech by Jerome Powell. Nvidia is up despite the Taiwan earthquake, while Tesla's stock is declining.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"S&P 500 Retreated from All-Time High: Is it Just a Correction?\",\n    \"summary\": \"On Tuesday, April 3, 2024, stock prices declined, with the S&P 500 index falling 0.72% to close slightly above 5,200, due to profit-taking after a flat Monday.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Market Clubhouse Morning Memo - April 3rd, 2024 (Trade Strategy For SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, and TSLA) - Invesco QQQ Trust, Series 1 (NASDAQ:QQQ)\",\n    \"summary\": \"The Market Clubhouse Morning Memo for April 3rd, 2024, discusses trade strategies for SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, and TSLA, based on a proprietary formula considering price, volume, and options flow.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Wall Street Wakes Up To The Risk In The Stock Market - Hoping For A Dovish Powell To Run Up Stocks - iShares 20+ Year Treasury Bond ETF (NASDAQ:TLT)\",\n    \"summary\": \"Wall Street is recognizing risk in the stock market and anticipating a dovish stance from Jerome Powell to boost stocks. The article references a downward sloping trendline on the iShares 20+ Year Treasury Bond ETF (TLT) chart, contrary to previous expectations.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Apple Flashes Ominous Death Cross; What's Next?\",\n    \"summary\": \"Apple stock has formed a death cross pattern, signaling a potential bearish trend. The article discusses the implications of this technical indicator.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Taiwan Quake Seen Having Minimal Impact On TSMC But Raises Concerns\",\n    \"summary\": \"A recent 7.4-magnitude earthquake in Taiwan is expected to have minimal impact on TSMC's production. However, the event has renewed concerns about the concentration of chip manufacturing in one geographic location.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Semiconductor Supply Chain Fears: Counting The Cost Of Taiwan's Earthquake Taiwan Quake Rattles Semiconductor Supply Chain: 'World Is 4.5X More Dependent On Taiwan' For Chips Than Europe Was On Russian Energy - Apple (NASDAQ:AAPL), Micron Technology (NASDAQ:MU)\",\n    \"summary\": \"The earthquake in Taiwan has highlighted the vulnerability of the semiconductor supply chain due to its concentration in one location. Market reactions indicate that companies in the sector have been preparing for such disruptions.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Taiwan Earthquake Alarms Gene Munster: 'The Only Thing That Can Slow AI In The Near-Term' Is Impact On TSMC Chip Production - Apple (NASDAQ:AAPL), Advanced Micro Devices (NASDAQ:AMD)\",\n    \"summary\": \"Tech analyst Gene Munster suggests that the only factor that can slow down AI development in the near term is the impact of the Taiwan earthquake on TSMC's chip production.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Why Is Tim Cook Cashing Out? Apple CEO's $33M Stock Sale Fuels Speculation - Apple (NASDAQ:AAPL)\",\n    \"summary\": \"Apple CEO Tim Cook sold over $33 million worth of Apple shares between April 1st and 2nd, leading to speculation about the reasons behind the sale. He sold 99,183 shares on the first day at $170.03 each.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Would You Leave Behind A Digital Clone After Death? Gen Z Is Into This 'Grief Tech' Trend: Study - Amazon.com (NASDAQ:AMZN)\",\n    \"summary\": \"A growing 'grief tech' trend, especially among Gen Z, explores the possibility of creating digital avatars or clones to exist after death, challenging traditional views on mourning and remembrance.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Not UK Or Japan: India To Emerge As Apple's Third-Largest iPhone Market In Just 2 Years - Apple (NASDAQ:AAPL)\",\n    \"summary\": \"A Counterpoint Research report predicts that India will become Apple's third-largest iPhone market by 2026, surpassing Japan and the UK.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Taiwan's Earthquake Puts The World's Semiconductor Supply Chain To The Test - Taiwan Semiconductor (NYSE:TSM)\",\n    \"summary\": \"The recent earthquake in Taiwan, the largest since 1999, is expected to disrupt Asia's semiconductor supply chain.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Should Schwab Fundamental U.S. Large Company Index ETF (FNDX) Be on Your Investing Radar?\",\n    \"summary\": \"This article discusses whether the Schwab Fundamental U.S. Large Company Index ETF (FNDX) should be considered for investment.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"iPhone 16 Rumors Roundup: Everything We Know About Apple's Next Flagship - Apple (NASDAQ:AAPL)\",\n    \"summary\": \"Rumors and leaks surrounding Apple's upcoming iPhone 16 series are circulating, with the release expected in September, continuing Apple's annual tradition.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"As Apple Tosses Away EV Plans, Chinese Smartphone Titans Rev Up To Dominate Space - Xiaomi (OTC:XIACF)\",\n    \"summary\": \"Apple is scaling back its electric vehicle plans, while Chinese smartphone companies are increasing their efforts in the EV market, potentially altering the high-end EV landscape.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Has Apple Vision Pro Already Flopped?\",\n    \"summary\": \"The article questions the current state of the Apple Vision Pro, suggesting that the initial hype surrounding the product may have diminished.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"ROKU Collaborates With NBA to Introduce Latest FAST Channel\",\n    \"summary\": \"Roku and the NBA have partnered to launch the first NBA FAST channel and the NBA Zone.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Alphabet (GOOGL) Bolsters Pixel Watch Series With Latest Move\",\n    \"summary\": \"Google (Alphabet) is enhancing its Pixel Watch series through the introduction of new features and updates.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Aggressive Buying In Silver As Fed Chair Jerome Powell Itching To Cut Rates - Apple (NASDAQ:AAPL)\",\n    \"summary\": \"The article discusses aggressive buying in silver due to expectations of potential rate cuts by the Federal Reserve Chair Jerome Powell. It also mentions Apple's development of a home robot and Alphabet's potential charging for AI-based search.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Wall Street analysts say to buy this portfolio casino stock. Here's our take\",\n    \"summary\": \"This article discusses the recommendation to buy a portfolio casino stock, as discussed in the Investing Club's \"Morning Meeting\".\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Nvidia, Alphabet lead market cap surge in March driven by AI enthusiasm\",\n    \"summary\": \"Nvidia and Alphabet experienced significant market cap growth in March, fueled by AI enthusiasm and anticipation of new products and expansion.\",\n    \"sentiment\": \"Positive\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Market Clubhouse Morning Memo - April 4th, 2024  ( Trade Strategy For SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, and TSLA )  - Invesco QQQ Trust, Series 1  ( NASDAQ:QQQ )\",\n    \"summary\": \"The Market Clubhouse Morning Memo for April 4th, 2024, will analyze SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, and TSLA, using a proprietary formula based on price, volume, and options flow.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Taiwan's semiconductor industry resumes operations after deadly earthquake\",\n    \"summary\": \"Taiwan's semiconductor industry has resumed operations following a major earthquake, while emergency services focus on recovery efforts.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Taiwan's semiconductor industry resumes operations after deadly earthquake\",\n    \"summary\": \"Taiwan's semiconductor industry has resumed operations, and emergency personnel are assisting those affected by the recent earthquake.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Natural Language Processing Market size is set to grow by USD 53.50 bn from 2023-2027, 3M Co., Alphabet Inc ... - PR Newswire\",\n    \"summary\": \"The Natural Language Processing Market is projected to expand by USD 53.50 billion between 2023 and 2027, with companies like 3M Co. and Alphabet Inc. involved.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Tesla seeks support from Apple to prove driver killed in crash was gaming\",\n    \"summary\": \"Tesla is seeking Apple's technical support to demonstrate that a Model X driver, who was an Apple employee, was playing a video game on his phone at the time of a fatal crash involving the Autopilot system.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Apple Killed Its Car, Display Projects, And Then It Culled 600 Jobs: Report - Apple  ( NASDAQ:AAPL )\",\n    \"summary\": \"Apple has reportedly conducted its third round of layoffs this year, impacting 600 employees, following earlier reductions in its Siri annotation team.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Google Joins Apple's Fight Against Stalkers With Imminent 'Find My Devices' Rollout - Alphabet  ( NASDAQ:GOOGL )\",\n    \"summary\": \"Google, a subsidiary of Alphabet Inc., is launching its 'Find My Devices' network this month, which will be compatible with Apple's 'Find My' network.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"These 2 \\\"Magnificent Seven\\\" Stocks Are in the Spotlight for All the Wrong Reasons\",\n    \"summary\": \"Investor concerns regarding growth are focused on these companies.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Forget Apple: Warren Buffett Has Spent Twice as Much Buying Shares of This Beloved Stock Since 2018\",\n    \"summary\": \"Although Apple is the largest holding in Warren Buffett's portfolio, it's not his most actively purchased stock since 2018.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"As Apple Stares At First Revenue Drop In A Decade, Samsung Predicts Stellar 10-Fold Q1 Profits Amid Surging Chip Prices - Samsung Electronics Co  ( OTC:SSNLF )\",\n    \"summary\": \"While Apple faces a potential revenue decline, Samsung forecasts a significant profit increase in Q1, driven by fluctuating chip prices.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Bob Iger Once Thought Apple And Disney Merger Would Have Happened If His Friend Steve Jobs Lived: 'I Think We Would Have Gotten There' - Walt Disney  ( NYSE:DIS )\",\n    \"summary\": \"Disney CEO Bob Iger believed a merger with Apple was likely, but the idea was abandoned after Steve Jobs' death.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"The Trump tax cuts were neither panacea nor rip-off\",\n    \"summary\": \"The article discusses the upcoming expiration of the Trump tax cuts in 2025 and suggests that reversing benefits given to businesses is not advisable.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Gene Munster And Dan Ives Disagree On Apple's Alleged Foray Into Personal Home Robots: 'It Would Be A Horror Show...' - Apple  ( NASDAQ:AAPL )\",\n    \"summary\": \"Analysts Gene Munster and Dan Ives have contrasting views on Apple potentially entering the personal home robot market.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"3 TIAA Mutual Funds for Solid Returns\",\n    \"summary\": \"The article suggests considering TIAA mutual funds, including TILPX, TSRPX, and TRVPX, for diversified investment choices.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Taiwan Semi, A Key Supplier To Nvidia and Apple Springs Back To Action After Taiwan Earthquake - Taiwan Semiconductor  ( NYSE:TSM )\",\n    \"summary\": \"Taiwan Semiconductor Manufacturing Co (TSM) has resumed construction after a temporary pause due to a 7.2-magnitude earthquake in Taiwan.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Apple's Key Supplier Foxconn Reports 9% Decline In Q1 Revenue, Anticipates Growth In Future - Hon Hai Precision  ( OTC:HNHPF )\",\n    \"summary\": \"Foxconn, a major Apple supplier, reported a 9% decrease in Q1 2024 revenue, totaling $41.2 billion, but anticipates future growth.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"1 Wall Street Analyst Thinks This Magnificent Seven Stock Is Going to $220. Is It a buy Around $169?\",\n    \"summary\": \"A Wall Street analyst believes a 'Magnificent Seven' stock will reach $220 and suggests considering it around $169, citing strong performance in services revenue.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Stocks Sold Off: What's Next?\",\n    \"summary\": \"On April 5, 2024, the S&P 500 index closed 1.23% lower, experiencing a significant intraday decline.\",\n    \"sentiment\": \"Negative\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Market Clubhouse Morning Memo - April 5th, 2024  ( Trade Strategy For SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, and TSLA )  - Invesco QQQ Trust, Series 1  ( NASDAQ:QQQ )\",\n    \"summary\": \"The Market Clubhouse Morning Memo for April 5th, 2024, discusses trading strategies for SPY, QQQ, AAPL, MSFT, NVDA, GOOGL, META, and TSLA, using a proprietary formula based on price, volume, and options flow.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Apple Supplier Reports Revenue Dip But Expects Growth Ahead As The AI Revolution Created Room For Contributors - Hon Hai Precision  ( OTC:HNHPF )\",\n    \"summary\": \"Foxconn, Apple's supplier, reported a revenue decline in the first quarter but anticipates growth due to the AI revolution.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Jobs Rocket Past Estimates, Be Careful Listening To Stock Market Permabulls - Amazon.com  ( NASDAQ:AMZN )\",\n    \"summary\": \"Non-farm payrolls exceeded expectations, with 303K jobs created versus a 200K consensus, indicating a strong economy.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Is Big Tech Finally Playing Nice? New Deal May Bring Google AI To iPhone - Apple  ( NASDAQ:AAPL ) , Direxion Daily AAPL Bear 1X Shares  ( NASDAQ:AAPD )\",\n    \"summary\": \"Google and Apple are reportedly in talks to integrate Google's Gemini AI into iPhones, potentially benefiting both companies.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```\n```json\n[\n  {\n    \"title\": \"Market Bounces, Nvidia Forging Base; Tesla Jumps On Robotaxi News\",\n    \"summary\": \"The market is rebounding, with Nvidia establishing a base and Tesla experiencing a jump following news about its robotaxi.\",\n    \"sentiment\": \"Neutral\"\n  }\n]\n```"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Transformer Node1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Dropbox": {
+      "main": [
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fundamental Analyst": {
+      "main": [
+        [
+          {
+            "node": "Dropbox5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bull analyst": {
+      "main": [
+        [
+          {
+            "node": "Dropbox8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Bear analyst": {
+      "main": [
+        [
+          {
+            "node": "Dropbox9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Technical analyst": {
+      "main": [
+        [
+          {
+            "node": "Dropbox11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Transformer Node2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyst merger": {
+      "main": [
+        [
+          {
+            "node": "Transformer Node3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bull analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Fundamental Analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bear analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Technical analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transformer Node2": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Transformer Node1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transformer Node3": {
+      "main": [
+        [
+          {
+            "node": "Stock Synthesis Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Stock Synthesis Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox4": {
+      "main": [
+        [
+          {
+            "node": "Extract from File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Fundamental Analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Dropbox1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox6": {
+      "main": [
+        [
+          {
+            "node": "Extract from File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File4": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Bull analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox7": {
+      "main": [
+        [
+          {
+            "node": "Extract from File5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File5": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Aggregate4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate4": {
+      "main": [
+        [
+          {
+            "node": "Bear analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox10": {
+      "main": [
+        [
+          {
+            "node": "Extract from File6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Aggregate5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File6": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate5": {
+      "main": [
+        [
+          {
+            "node": "Technical analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox11": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox9": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox8": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox5": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing3": {
+      "main": [
+        []
+      ]
+    },
+    "Stock Synthesis Agent": {
+      "main": [
+        [
+          {
+            "node": "Dropbox3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Dropbox12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox12": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox3": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "any"
+  },
+  "versionId": "9d8322fb-897c-4649-8132-ae1a07ad9af4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2ae2c89981039340d829937460d45406e20e1fe8706abd573e37b0e7483da8c4"
+  },
+  "id": "nETVM8zRMSYS1CeR",
+  "tags": []
+}
