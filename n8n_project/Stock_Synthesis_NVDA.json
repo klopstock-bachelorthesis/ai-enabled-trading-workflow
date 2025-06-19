@@ -1,0 +1,1613 @@
+{
+  "name": "NVDA",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        240
+      ],
+      "id": "c11ed113-13f2-4b00-91c6-a151e930adf7",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        -135
+      ],
+      "id": "dd09af62-ce89-49cc-8c1c-745194b53ba6",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        -135
+      ],
+      "id": "9eb4d107-666a-4ffc-869e-72596554f40c",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        865
+      ],
+      "id": "b7b53545-06e4-4cda-937e-bfa1dcbc4e28",
+      "name": "Extract from File2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        865
+      ],
+      "id": "d12b384f-a17b-44f1-924e-186105f77e53",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/NVDA_TA_{{ $json.counter }}.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        865
+      ],
+      "id": "1f940230-f2bc-40c3-bb10-3d253e1345c8",
+      "name": "Dropbox",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/NVDA_NEWS_{{ $json.counter }}.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        240
+      ],
+      "id": "3ebe1021-e036-42e7-8977-6935be001ef6",
+      "name": "Dropbox1",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/financial_data_aggregator_output/NVDA_{{ $json.counter }}.csv"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -135
+      ],
+      "id": "1e08120e-0b0b-425a-9ca3-922b874f2291",
+      "name": "Dropbox2",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Previous analysis: {{ $json.data[0].data }}\n\nFundamental data:\n• Symbol: {{ $json.data[1].data[0].Symbol }}\n• Asset Type: {{ $json.data[1].data[0].AssetType }}\n• Name: {{ $json.data[1].data[0].Name }}\n• Description: {{ $json.data[1].data[0].Description }}\n• CIK: {{ $json.data[1].data[0].CIK }}\n• Exchange: {{ $json.data[1].data[0].Exchange }}\n• Currency: {{ $json.data[1].data[0].Currency }}\n• Country: {{ $json.data[1].data[0].Country }}\n• Sector: {{ $json.data[1].data[0].Sector }}\n• Industry: {{ $json.data[1].data[0].Industry }}\n• Address: {{ $json.data[1].data[0].Address }}\n• Official Site: {{ $json.data[1].data[0].OfficialSite }}\n• Fiscal Year End: {{ $json.data[1].data[0].FiscalYearEnd }}\n• Latest Quarter: {{ $json.data[1].data[0].LatestQuarter }}\n• Market Capitalization: {{ $json.data[1].data[0].MarketCapitalization }}\n• EBITDA: {{ $json.data[1].data[0].EBITDA }}\n• P/E Ratio: {{ $json.data[1].data[0].PERatio }}\n• PEG Ratio: {{ $json.data[1].data[0].PEGRatio }}\n• Book Value: {{ $json.data[1].data[0].BookValue }}\n• Dividend Per Share: {{ $json.data[1].data[0].DividendPerShare }}\n• Dividend Yield: {{ $json.data[1].data[0].DividendYield }}\n• EPS: {{ $json.data[1].data[0].EPS }}\n• Revenue Per Share (TTM): {{ $json.data[1].data[0].RevenuePerShareTTM }}\n• Profit Margin: {{ $json.data[1].data[0].ProfitMargin }}\n• Operating Margin (TTM): {{ $json.data[1].data[0].OperatingMarginTTM }}\n• Return on Assets (TTM): {{ $json.data[1].data[0].ReturnOnAssetsTTM }}\n• Return on Equity (TTM): {{ $json.data[1].data[0].ReturnOnEquityTTM }}\n• Revenue (TTM): {{ $json.data[1].data[0].RevenueTTM }}\n• Gross Profit (TTM): {{ $json.data[1].data[0].GrossProfitTTM }}\n• Diluted EPS (TTM): {{ $json.data[1].data[0].DilutedEPSTTM }}\n• Quarterly Earnings Growth YOY: {{ $json.data[1].data[0].QuarterlyEarningsGrowthYOY }}\n• Quarterly Revenue Growth YOY: {{ $json.data[1].data[0].QuarterlyRevenueGrowthYOY }}\n• Analyst Target Price: {{ $json.data[1].data[0].AnalystTargetPrice }}\n• Trailing P/E: {{ $json.data[1].data[0].TrailingPE }}\n• Forward P/E: {{ $json.data[1].data[0].ForwardPE }}\n• Price-to-Sales (TTM): {{ $json.data[1].data[0].PriceToSalesRatioTTM }}\n• Price-to-Book Ratio: {{ $json.data[1].data[0].PriceToBookRatio }}\n• EV/Revenue: {{ $json.data[1].data[0].EVToRevenue }}\n• EV/EBITDA: {{ $json.data[1].data[0].EVToEBITDA }}\n• Beta: {{ $json.data[1].data[0].Beta }}\n• Shares Outstanding: {{ $json.data[1].data[0].SharesOutstanding }}\n• Dividend Date: {{ $json.data[1].data[0].DividendDate }}\n• Ex-Dividend Date: {{ $json.data[1].data[0].ExDividendDate }}\n• Fiscal Date Ending: {{ $json.data[1].data[0].fiscalDateEnding }}\n• Reported Currency: {{ $json.data[1].data[0].reportedCurrency }}\n• Gross Profit: {{ $json.data[1].data[0].grossProfit }}\n• Total Revenue: {{ $json.data[1].data[0].totalRevenue }}\n• Cost of Revenue: {{ $json.data[1].data[0].costOfRevenue }}\n• Cost of Goods Sold: {{ $json.data[1].data[0].costofGoodsAndServicesSold }}\n• Operating Income: {{ $json.data[1].data[0].operatingIncome }}\n• Selling, General & Administrative: {{ $json.data[1].data[0].sellingGeneralAndAdministrative }}\n• Research & Development: {{ $json.data[1].data[0].researchAndDevelopment }}\n• Operating Expenses: {{ $json.data[1].data[0].operatingExpenses }}\n• Investment Income Net: {{ $json.data[1].data[0].investmentIncomeNet }}\n• Net Interest Income: {{ $json.data[1].data[0].netInterestIncome }}\n• Interest Income: {{ $json.data[1].data[0].interestIncome }}\n• Interest Expense: {{ $json.data[1].data[0].interestExpense }}\n• Non-Interest Income: {{ $json.data[1].data[0].nonInterestIncome }}\n• Other Non-Operating Income: {{ $json.data[1].data[0].otherNonOperatingIncome }}\n• Depreciation: {{ $json.data[1].data[0].depreciation }}\n• Depreciation & Amortization: {{ $json.data[1].data[0].depreciationAndAmortization }}\n• Income Before Tax: {{ $json.data[1].data[0].incomeBeforeTax }}\n• Income Tax Expense: {{ $json.data[1].data[0].incomeTaxExpense }}\n• Interest & Debt Expense: {{ $json.data[1].data[0].interestAndDebtExpense }}\n• Net Income from Continuing Ops: {{ $json.data[1].data[0].netIncomeFromContinuingOperations }}\n• Comprehensive Income Net of Tax: {{ $json.data[1].data[0].comprehensiveIncomeNetOfTax }}\n• EBIT: {{ $json.data[1].data[0].ebit }}\n• EBITDA: {{ $json.data[1].data[0].ebitda }}\n• Net Income: {{ $json.data[1].data[0].netIncome }}\n• Total Assets: {{ $json.data[1].data[0].totalAssets }}\n• Total Current Assets: {{ $json.data[1].data[0].totalCurrentAssets }}\n• Cash & Cash Equivalents: {{ $json.data[1].data[0].cashAndCashEquivalentsAtCarryingValue }}\n• Cash & Short-Term Investments: {{ $json.data[1].data[0].cashAndShortTermInvestments }}\n• Inventory: {{ $json.data[1].data[0].inventory }}\n• Current Net Receivables: {{ $json.data[1].data[0].currentNetReceivables }}\n• Total Non-Current Assets: {{ $json.data[1].data[0].totalNonCurrentAssets }}\n• Property, Plant & Equipment: {{ $json.data[1].data[0].propertyPlantEquipment }}\n• Accumulated Depreciation PPE: {{ $json.data[1].data[0].accumulatedDepreciationAmortizationPPE }}\n• Intangible Assets: {{ $json.data[1].data[0].intangibleAssets }}\n• Intangible Assets Excl. Goodwill: {{ $json.data[1].data[0].intangibleAssetsExcludingGoodwill }}\n• Goodwill: {{ $json.data[1].data[0].goodwill }}\n• Investments: {{ $json.data[1].data[0].investments }}\n• Long-Term Investments: {{ $json.data[1].data[0].longTermInvestments }}\n• Short-Term Investments: {{ $json.data[1].data[0].shortTermInvestments }}\n• Other Current Assets: {{ $json.data[1].data[0].otherCurrentAssets }}\n• Other Non-Current Assets: {{ $json.data[1].data[0].otherNonCurrentAssets }}\n• Total Liabilities: {{ $json.data[1].data[0].totalLiabilities }}\n• Total Current Liabilities: {{ $json.data[1].data[0].totalCurrentLiabilities }}\n• Current Accounts Payable: {{ $json.data[1].data[0].currentAccountsPayable }}\n• Deferred Revenue: {{ $json.data[1].data[0].deferredRevenue }}\n• Current Debt: {{ $json.data[1].data[0].currentDebt }}\n• Short-Term Debt: {{ $json.data[1].data[0].shortTermDebt }}\n• Total Non-Current Liabilities: {{ $json.data[1].data[0].totalNonCurrentLiabilities }}\n• Capital Lease Obligations: {{ $json.data[1].data[0].capitalLeaseObligations }}\n• Long-Term Debt: {{ $json.data[1].data[0].longTermDebt }}\n• Current Long-Term Debt: {{ $json.data[1].data[0].currentLongTermDebt }}\n• Long-Term Debt Non-Current: {{ $json.data[1].data[0].longTermDebtNoncurrent }}\n• Short+Long-Term Debt Total: {{ $json.data[1].data[0].shortLongTermDebtTotal }}\n• Other Current Liabilities: {{ $json.data[1].data[0].otherCurrentLiabilities }}\n• Other Non-Current Liabilities: {{ $json.data[1].data[0].otherNonCurrentLiabilities }}\n• Total Shareholder Equity: {{ $json.data[1].data[0].totalShareholderEquity }}\n• Treasury Stock: {{ $json.data[1].data[0].treasuryStock }}\n• Retained Earnings: {{ $json.data[1].data[0].retainedEarnings }}\n• Common Stock: {{ $json.data[1].data[0].commonStock }}\n• Common Stock Shares Outstanding: {{ $json.data[1].data[0].commonStockSharesOutstanding }}\n• Operating Cash Flow: {{ $json.data[1].data[0].operatingCashflow }}\n• Payments for Operating Activities: {{ $json.data[1].data[0].paymentsForOperatingActivities }}\n• Proceeds from Operating Activities: {{ $json.data[1].data[0].proceedsFromOperatingActivities }}\n• Change in Operating Liabilities: {{ $json.data[1].data[0].changeInOperatingLiabilities }}\n• Change in Operating Assets: {{ $json.data[1].data[0].changeInOperatingAssets }}\n• Depreciation, Depletion & Amortization: {{ $json.data[1].data[0].depreciationDepletionAndAmortization }}\n• Capital Expenditures: {{ $json.data[1].data[0].capitalExpenditures }}\n• Change in Receivables: {{ $json.data[1].data[0].changeInReceivables }}\n• Change in Inventory: {{ $json.data[1].data[0].changeInInventory }}\n• Profit/Loss: {{ $json.data[1].data[0].profitLoss }}\n• Cash Flow from Investment: {{ $json.data[1].data[0].cashflowFromInvestment }}\n• Cash Flow from Financing: {{ $json.data[1].data[0].cashflowFromFinancing }}\n• Proceeds from Repayments of Short-Term Debt: {{ $json.data[1].data[0].proceedsFromRepaymentsOfShortTermDebt }}\n• Payments for Repurchase of Common Stock: {{ $json.data[1].data[0].paymentsForRepurchaseOfCommonStock }}\n• Payments for Repurchase of Equity: {{ $json.data[1].data[0].paymentsForRepurchaseOfEquity }}\n• Payments for Repurchase of Preferred Stock: {{ $json.data[1].data[0].paymentsForRepurchaseOfPreferredStock }}\n• Dividend Payout: {{ $json.data[1].data[0].dividendPayout }}\n• Dividend Payout Common Stock: {{ $json.data[1].data[0].dividendPayoutCommonStock }}\n• Dividend Payout Preferred Stock: {{ $json.data[1].data[0].dividendPayoutPreferredStock }}\n• Proceeds from Issuance of Common Stock: {{ $json.data[1].data[0].proceedsFromIssuanceOfCommonStock }}\n• Proceeds from Issuance of Long-Term Debt & Capital Securities: {{ $json.data[1].data[0].proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet }}\n• Proceeds from Issuance of Preferred Stock: {{ $json.data[1].data[0].proceedsFromIssuanceOfPreferredStock }}\n• Proceeds from Repurchase of Equity: {{ $json.data[1].data[0].proceedsFromRepurchaseOfEquity }}\n• Proceeds from Sale of Treasury Stock: {{ $json.data[1].data[0].proceedsFromSaleOfTreasuryStock }}\n• Change in Cash and Cash Equivalents: {{ $json.data[1].data[0].changeInCashAndCashEquivalents }}\n• Change in Exchange Rate: {{ $json.data[1].data[0].changeInExchangeRate }}\n• Reported EPS: {{ $json.data[1].data[0].reportedEPS }}\n\n\n",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a seasoned financial analyst with expertise in parsing CSV-formatted annual financial data to deliver high-impact fundamental company evaluations.\",\n  \"context\": \"The CSV file includes: Company overview and business description; Key valuation and performance ratios (P/E ratio, profit margin, ROE, etc.); Most recent annual financial statements (income statement, balance sheet, cash flow); Latest earnings per share (EPS). Treat missing values as “not available” and assume all figures are in USD and annual.\",\n  \"output\": \"Produce a concise fundamental analysis in exactly five sentences, structured under these subheadings: 1. Business Model & Market Position; 2. Financial Strengths & Weaknesses; 3. Trends in Profitability, Liquidity & Solvency; 4. Valuation Assessment (fairly valued, overvalued, or undervalued based on P/E and ROE); 5. Investment Outlook (bullish, neutral, or bearish and why).\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2300,
+        -460
+      ],
+      "id": "27f4f2dd-06be-491e-980f-0debd2fc102d",
+      "name": "Fundamental Analyst"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Previous bull analysis: {{ $json.data[0].data }}\nSummaries: {{ $json.data[1].text }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a financial news analyst whose role is to make a bullish short-term case (next 5–7 trading days) for a specific stock based on recent news articles.\",\n  \"context\": \"You will receive a list of summarized news articles. From these, extract and highlight positive developments, sentiment, or market-moving events that could support a rise in the stock price. Ignore or downplay neutral or negative signals unless necessary for context.\",\n  \"input\": \"An array of 50 summarized news articles from the current week\",\n  \"output\": \"• A short list (2–3 bullets) of the most supportive headlines or developments\\n• A summary statement explaining why these developments are likely to lead to positive price action this week\\n• A bullish short-term sentiment rating (Strongly Bullish, Moderately Bullish, or Cautiously Bullish)\\n\\nUse exactly five sentences in total.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        3340,
+        -60
+      ],
+      "id": "ee90e552-0b12-4e54-8377-8aa17abf497d",
+      "name": "Bull analyst"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Previous bear analysis: {{ $json.data[0].data }}\nSummaries: {{ $json.data[1].text }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a financial news analyst whose role is to make a bearish short-term case (next 5–7 trading days) for a specific stock based on recent news articles.\",\n  \"context\": \"You will receive a list of summarized news articles. From these, extract and highlight negative developments, risks, or market sentiment that could lead to downward pressure on the stock. Ignore or downplay positive news unless necessary for contrast.\",\n  \"input\": \"An array of 50 summarized news articles from the current week\",\n  \"output\": \"• A short list (2–3 bullets) of the most concerning or negative headlines\\n• A summary statement explaining why these developments are likely to lead to negative price action this week\\n• A bearish short-term sentiment rating (Strongly Bearish, Moderately Bearish, or Cautiously Bearish)\\n\\nUse exactly five sentences in total.\"\n}\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        3340,
+        500
+      ],
+      "id": "5e3a157e-fef7-4b1c-8bca-ea0ea6bd4297",
+      "name": "Bear analyst"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a technical trading strategist agent. Your job is to analyze the provided technical indicator data and deliver a single price target for the end of the next trading week, along with a buy, hold, or sell recommendation.\",\n  \"context\": \"You will receive a CSV table of daily technical indicators for a stock, including:\\n\\n• RSI (Relative Strength Index): you know that RSI above 70 signals overbought conditions and potential pullback, RSI below 30 signals oversold conditions and potential rebound. Readings between 50–70 suggest bullish momentum, while readings between 30–50 suggest bearish momentum.\\n\\n• MACD (Moving Average Convergence Divergence) and its signal line: you understand that when the MACD line crosses above its signal line, it indicates bullish momentum and a buy signal; when it crosses below, it indicates bearish momentum and a sell signal. You also recognize divergences between price and MACD as early reversal clues, and you interpret the MACD histogram’s expansion/contraction as momentum strength.\\n\\n• Bollinger Bands (upper and lower): you know that price touching or breaking the upper band can indicate overbought conditions, while touching or breaking the lower band can indicate oversold conditions. You interpret a Bollinger Band “squeeze” (narrow band width) as a period of low volatility often followed by a strong directional breakout, and an expanding band width as confirmation of a volatility breakout.\\n\\n• Volume: you recognize that rising volume accompanying price moves confirms the strength of the move, while divergences (e.g., price rising on falling volume) warn of potential exhaustion. You also watch for volume spikes that may mark capitulation or institutional activity.\",\n  \"input\": \"A CSV file or array of objects with columns: date, close, RSI, MACD, MACD_signal, Bollinger_middle, Bollinger_upper, Bollinger_lower, volume.\",\n  \"output\": \"Provide exactly two items:\\n1. A single numerical percentage gain/ loss traget for the stock at the close of the coming trading week.\\n2. A clear recommendation: BUY, HOLD, or SELL, with a short rationale referencing the key technical signals.\"\n}\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        2300,
+        900
+      ],
+      "id": "135a164d-1765-49f9-bbca-a821ca3fc0e0",
+      "name": "Technical analyst"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        240
+      ],
+      "id": "65e14e67-e29b-45dc-b830-1523143812ee",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        440
+      ],
+      "id": "7a942cb5-27a9-4e4a-9e8d-655f75e07814",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2378,
+        240
+      ],
+      "id": "966e1fa6-d2df-4734-85f0-e1c11eaa7abd",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3712,
+        148
+      ],
+      "id": "c8ca33bd-2edd-4d26-8f34-f491af969bd1",
+      "name": "Analyst merger"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3424,
+        160
+      ],
+      "id": "6d699f18-8f13-4b9d-be57-f59747ef853c",
+      "name": "Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2388,
+        -240
+      ],
+      "id": "2bdd95b9-7ebe-4270-8507-b0341ba3cb79",
+      "name": "Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3424,
+        710
+      ],
+      "id": "a8b99fec-f89c-49e9-9a0f-89d964a814b9",
+      "name": "Gemini2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2388,
+        1110
+      ],
+      "id": "6c29ae40-2c46-4806-9b22-1a1e25158bd8",
+      "name": "Gemini3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "instructions": "Transform all outputs given to you into one single text.",
+        "codeGeneratedForPrompt": "Transform all outputs given to you into one single text.",
+        "jsCode": "const items = $input.all();\nconst text = items.map((item) => item?.json?.output).join(\"\\n\");\nreturn { text };\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        2676,
+        240
+      ],
+      "id": "64321d44-1318-4b0a-ba81-9f8f05ce0b42",
+      "name": "Transformer Node2"
+    },
+    {
+      "parameters": {
+        "instructions": "Please split half of the items provided to output 1 and the other half to output 2",
+        "codeGeneratedForPrompt": "Please split half of the items provided to output 1 and the other half to output 2",
+        "jsCode": "const items = $input.all();\nconst half = Math.ceil(items.length / 2);\n\nconst output1 = items.slice(0, half);\nconst output2 = items.slice(half);\n\nreturn { output1, output2 };\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        240
+      ],
+      "id": "dcf9d0f4-a2c0-4c11-81ff-59dd5f90d2ad",
+      "name": "Transformer Node1"
+    },
+    {
+      "parameters": {
+        "instructions": "Transform all outputs given to you into one single text.",
+        "codeGeneratedForPrompt": "Transform all outputs given to you into one single text.",
+        "jsCode": "const items = $input.all();\nconst text = items.map((item) => item?.json?.output).join(\"\\n\");\nreturn { text };\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        3932,
+        169
+      ],
+      "id": "aab0dd69-4104-4a13-b038-70352546fad7",
+      "name": "Transformer Node3"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "HDMmeLWfjL5lR37P",
+          "mode": "list",
+          "cachedResultName": "BT — NVDA Summary Analyst I"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2080,
+        240
+      ],
+      "id": "4ce8ce2c-af72-4311-9edc-16f7f685241c",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "QSkZFW63KBK0wu5M",
+          "mode": "list",
+          "cachedResultName": "BT — NVDA Summary Analyst II"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2080,
+        440
+      ],
+      "id": "443f7b04-a122-4d9f-81c0-2e12a2c471cc",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        980,
+        220
+      ],
+      "id": "33711a4d-40cb-4afe-9727-8ebf25fa959b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a stock synthesis agent tasked with integrating insights from four specialized analyses to produce a unified outlook and one-week expected return.\",\n  \"context\": \"You will receive outputs from four preceding agents:\\n• Fundamental analysis: concise key strengths, weaknesses, and valuation view.\\n• Technical analysis: chart patterns, trend signals, and momentum assessment.\\n• Bull case: most supportive recent news developments and bullish sentiment rating.\\n• Bear case: most concerning recent news developments and bearish sentiment rating.\",\n  \"input\": {\n    \"fundamental\": { \"summary\": \"string\" },\n    \"technical\": { \"summary\": \"string\" },\n    \"bull_case\": { \"bullets\": [\"string\"], \"summary\": \"string\", \"sentiment\": \"string\" },\n    \"bear_case\": { \"bullets\": [\"string\"], \"summary\": \"string\", \"sentiment\": \"string\" }\n  },\n  \"output\": \"Provide two outputs:\\n1. A cohesive one-paragraph synthesis highlighting how fundamental and technical factors combine with bullish and bearish news to shape the outlook.\\n2. A balanced assessment of risks and catalysts.\\n3. Provide a single numeric expected return (e.g. 0.010 instead of 1%) for the next 5–7 trading days (as a percentage).\\n Answer in plain text.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4160,
+        160
+      ],
+      "id": "5027eb5c-62cf-4acb-ab92-648649db861c",
+      "name": "Stock Synthesis Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4240,
+        389
+      ],
+      "id": "41853b40-822c-423a-bc13-4aaaf26cd52f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        -360
+      ],
+      "id": "162b1d95-62fd-44d6-a5ae-d92423ddd60c",
+      "name": "Dropbox4",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        -360
+      ],
+      "id": "09823bdc-fd8d-41c0-8469-bd60a0d736cf",
+      "name": "Extract from File3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1860,
+        -360
+      ],
+      "id": "5bc5a428-2cca-46c1-8d73-661e2dfbfda2",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        -360
+      ],
+      "id": "2f9c9f77-ebe7-434d-a28d-8ad68ee3106b",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        -360
+      ],
+      "id": "cd008b04-bf9d-43cc-ae54-adfe9dd38992",
+      "name": "Dropbox5",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_BULL_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2378,
+        40
+      ],
+      "id": "b22d4bcb-c30e-418b-94ed-ab340becb63e",
+      "name": "Dropbox6",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2676,
+        40
+      ],
+      "id": "36687194-8b2e-49cc-9076-2c07e27350f0",
+      "name": "Extract from File4"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_BEAR_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2378,
+        590
+      ],
+      "id": "251d7d87-4a15-4c54-b306-dc61cf3ab9ec",
+      "name": "Dropbox7",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2676,
+        590
+      ],
+      "id": "9e57ab47-509b-439f-b9fd-431ddec2184c",
+      "name": "Extract from File5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2896,
+        40
+      ],
+      "id": "56e7dc10-dc1a-4acd-a5f3-3d11c2593079",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2896,
+        490
+      ],
+      "id": "55c188aa-85e0-43cd-9a31-72dc82b36ebb",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_BULL_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        3720,
+        400
+      ],
+      "id": "c12b776a-a25a-4390-9e91-c17f60ca5d76",
+      "name": "Dropbox8",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_BEAR_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        3712,
+        790
+      ],
+      "id": "8dfeb560-25d9-4203-94e0-f02d68256d75",
+      "name": "Dropbox9",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3116,
+        40
+      ],
+      "id": "cfcc1525-26a6-441e-ba9c-d780f216b2fb",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3116,
+        490
+      ],
+      "id": "3de850dc-9763-4167-a57b-fe0be1bd9ec9",
+      "name": "Aggregate4"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "download",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_TA_{{ $json.counter -1 }}.txt"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        1090
+      ],
+      "id": "c835dff1-be0f-43d7-a20f-21157c3a63c3",
+      "name": "Dropbox10",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        1090
+      ],
+      "id": "00262b69-af2c-4180-a31a-72f9cfb47d54",
+      "name": "Extract from File6"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1860,
+        890
+      ],
+      "id": "f8b3f21d-f48b-4d36-821b-509054f52931",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        890
+      ],
+      "id": "93f1b4d3-a0ac-41d8-8860-a2ec0a8c206f",
+      "name": "Aggregate5"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_TA_{{ $('When Executed by Another Workflow').item.json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        2676,
+        1040
+      ],
+      "id": "ffc1c858-8692-48d7-84be-336aa65a86e6",
+      "name": "Dropbox11",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        -360
+      ],
+      "id": "5fd0977f-7377-4316-bfb2-62301a5f6bb0",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3940,
+        400
+      ],
+      "id": "c4daac2c-c0c1-40a8-a051-59f76eee7f85",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3940,
+        800
+      ],
+      "id": "8c381dd5-6c6d-4032-9364-d0a24c61fa6f",
+      "name": "No Operation, do nothing2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        1040
+      ],
+      "id": "a0f1117d-80f8-4c4b-bf37-556370dad39d",
+      "name": "No Operation, do nothing3"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_ANALYSIS_{{ $('When Executed by Another Workflow').first().json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        4520,
+        40
+      ],
+      "id": "a67c42b4-70cb-410c-82d8-675fad1b0d30",
+      "name": "Dropbox3",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4700,
+        40
+      ],
+      "id": "b7a0b9b2-cb7c-482d-a498-1081846026d5",
+      "name": "No Operation, do nothing4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "Please analyze the user message and give as output solely the expected return (Format: e.g. 0.010 instead of 1%)"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4540,
+        280
+      ],
+      "id": "e593c7cd-9299-4cb7-add9-c060a88d270d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4580,
+        500
+      ],
+      "id": "b033b8d7-d31b-49f3-95db-1f53daefbccf",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "path": "=/Apps/trading_n8n/agents_output/NVDA_PREDICTED_RETURN_{{ $('When Executed by Another Workflow').first().json.counter }}.txt",
+        "fileContent": "={{ $json.output }}"
+      },
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [
+        4900,
+        280
+      ],
+      "id": "ccc12792-16d9-451d-a5aa-2fedeebf86d8",
+      "name": "Dropbox12",
+      "credentials": {
+        "dropboxOAuth2Api": {
+          "id": "MUDog7C52B7LiryO",
+          "name": "Dropbox account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        5100,
+        280
+      ],
+      "id": "1e7f7a50-94aa-46fa-8960-1481bbc7f992",
+      "name": "No Operation, do nothing5"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "counter": 1
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Transformer Node1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Dropbox": {
+      "main": [
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fundamental Analyst": {
+      "main": [
+        [
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bull analyst": {
+      "main": [
+        [
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Dropbox8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bear analyst": {
+      "main": [
+        [
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 2
+          },
+          {
+            "node": "Dropbox9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Technical analyst": {
+      "main": [
+        [
+          {
+            "node": "Analyst merger",
+            "type": "main",
+            "index": 3
+          },
+          {
+            "node": "Dropbox11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Transformer Node2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyst merger": {
+      "main": [
+        [
+          {
+            "node": "Transformer Node3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bull analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Fundamental Analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bear analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Technical analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transformer Node2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Transformer Node1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transformer Node3": {
+      "main": [
+        [
+          {
+            "node": "Stock Synthesis Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Dropbox1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dropbox10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Stock Synthesis Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox4": {
+      "main": [
+        [
+          {
+            "node": "Extract from File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Fundamental Analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox5": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox6": {
+      "main": [
+        [
+          {
+            "node": "Extract from File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox7": {
+      "main": [
+        [
+          {
+            "node": "Extract from File5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File4": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File5": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Aggregate4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Bull analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate4": {
+      "main": [
+        [
+          {
+            "node": "Bear analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox10": {
+      "main": [
+        [
+          {
+            "node": "Extract from File6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File6": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Aggregate5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate5": {
+      "main": [
+        [
+          {
+            "node": "Technical analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox8": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox9": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox11": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stock Synthesis Agent": {
+      "main": [
+        [
+          {
+            "node": "Dropbox3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox3": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Dropbox12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox12": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f7d77336-6d08-48a9-95a9-19113e173367",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2ae2c89981039340d829937460d45406e20e1fe8706abd573e37b0e7483da8c4"
+  },
+  "id": "7Vb4TwOHsCxRc2DZ",
+  "tags": []
+}
