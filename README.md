@@ -20,21 +20,6 @@ This repository supports the end-to-end implementation of a modular investment w
      - Synthesize per-stock insights into weekly return forecasts  
      - Coordinate portfolio construction and generate human-readable reports  
 
-## Repository Structure
-
-ai-enabled-trading-workflow/
-├── financial_data_aggregator/
-│   ├── data_fetchers/           # Modules for prices, technicals, fundamentals, news
-│   ├── project_utils/           # Utility functions (date ranges, logging, etc.)
-│   ├── env/                     # Example .env for API keys
-│   ├── main.py                  # CLI entry point: pulls data for specified tickers
-│   └── requirements.txt         # Python dependencies
-├── backtesting_main.py          # Jupyter-style backtest and visualization script
-└── n8n_project/                 # n8n JSON workflow exports (trading, orchestration, summary)
-    ├── main_trading_workflow.json
-    ├── stock_orchestrator_*.json
-    └── summary_analyst_*.json
-
 ## Getting Started
 
 1. **Install Python dependencies**
