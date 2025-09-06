@@ -1,0 +1,694 @@
+{
+  "name": "NVDA Summary Analyst I",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -20,
+        -100
+      ],
+      "id": "d39f80be-addd-4ae7-8800-9ad7bab32a93",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        240,
+        80
+      ],
+      "id": "61879c6d-9f88-4964-8617-9753a73b1347",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.json.title }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        400,
+        80
+      ],
+      "id": "e2b332bf-2b56-44fa-ac9c-1d2ef9bfeab9",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Title: {{ $json.json.title }}\nContent: {{ $json.json.summary }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a summary agent specialized in processing news articles to produce neutral, informative summaries and sentiment analysis.\",\n  \"context\": \"You will receive a list of news articles, each containing a title and full content.\",\n  \"input\": \"An array of objects, each with:\\n  • title: string\\n  • content: string\",\n  \"output\": \"Return an array of objects, each with:\\n  • title: the original title\\n  • summary: a concise, precise, and neutral summary of the article’s key points\\n  • sentiment: one of [“Positive”, “Neutral”, “Negative”] reflecting the overall tone of the article\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        200,
+        -100
+      ],
+      "id": "81dac841-1eee-4a20-9c9c-3ef7aeaa4cbc",
+      "name": "Summary Analyst I"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "json": {
+            "title": "Ansys & Cognata Partner for ADAS/AV Sensor Testing on Microsoft Azure",
+            "url": "https://www.zacks.com/stock/news/2391677/ansys-cognata-partner-for-adasav-sensor-testing-on-microsoft-azure",
+            "time_published_str": "20250103T144100",
+            "time_published_iso": "2025-01-03T14:41:00+00:00",
+            "authors": "['Zacks Equity Research']",
+            "summary": "ANSS joins Cognata and Microsoft to enable web-based testing and validation of ADAS/AV sensors in a virtual environment.",
+            "banner_image": "https://staticx-tuner.zacks.com/images/articles/main/bc/51150.jpg",
+            "source": "Zacks Commentary",
+            "source_domain": "www.zacks.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Earnings', 'relevance_score': '0.972476'}, {'topic': 'Technology', 'relevance_score': '0.5'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.298533,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.046724', 'ticker_sentiment_score': '0.244561', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 0
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "SERV Stock Rises 370% Since IPO: Will the Rally Continue in 2025?",
+            "url": "https://www.zacks.com/stock/news/2391679/serv-stock-rises-370-since-ipo-will-the-rally-continue-in-2025",
+            "time_published_str": "20250103T144500",
+            "time_published_iso": "2025-01-03T14:45:00+00:00",
+            "authors": "['Aniruddha Ganguly']",
+            "summary": "Serve Robotics shares are risky for near-term investors but are attractive on a long-term basis due to an expanding robotics fleet.",
+            "banner_image": "https://staticx-tuner.zacks.com/images/articles/main/a9/50721.jpg",
+            "source": "Zacks Commentary",
+            "source_domain": "www.zacks.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Retail & Wholesale', 'relevance_score': '0.333333'}, {'topic': 'Financial Markets', 'relevance_score': '0.266143'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.650727'}, {'topic': 'Mergers & Acquisitions', 'relevance_score': '0.158519'}, {'topic': 'Real Estate & Construction', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.238331,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.104002', 'ticker_sentiment_score': '0.079188', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 1
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Insights Into NVIDIA's Performance Versus Peers In Semiconductors & Semiconductor Equipment Sector - NVIDIA  ( NASDAQ:NVDA ) ",
+            "url": "https://www.benzinga.com/insights/news/25/01/42787139/insights-into-nvidias-performance-versus-peers-in-semiconductors-amp-semiconductor-equipment-sector",
+            "time_published_str": "20250103T150011",
+            "time_published_iso": "2025-01-03T15:00:11+00:00",
+            "authors": "['Benzinga Insights']",
+            "summary": "In the ever-changing and fiercely competitive business landscape, conducting thorough company analysis is crucial for investors and industry experts. In this article, we will undertake a comprehensive industry comparison, evaluating NVIDIA NVDA and its primary competitors in the Semiconductors & ...",
+            "banner_image": "https://www.benzinga.com/files/images/story/2025/1735916408_0.png",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "Markets",
+            "topics": "[{'topic': 'Earnings', 'relevance_score': '0.938793'}, {'topic': 'Financial Markets', 'relevance_score': '0.5855'}, {'topic': 'Manufacturing', 'relevance_score': '1.0'}]",
+            "overall_sentiment_score": 0.289979,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.540534', 'ticker_sentiment_score': '0.509834', 'ticker_sentiment_label': 'Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 2
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Cerence Stock Jumps After Inking Pact With AI Giant Nvidia - NVIDIA  ( NASDAQ:NVDA ) , Cerence  ( NASDAQ:CRNC ) ",
+            "url": "https://www.benzinga.com/trading-ideas/movers/25/01/42788039/cerence-stock-jumps-after-inking-pact-with-ai-giant-nvidia",
+            "time_published_str": "20250103T151619",
+            "time_published_iso": "2025-01-03T15:16:19+00:00",
+            "authors": "['Nabaparna Bhattacharya']",
+            "summary": "Cerence partners with NVIDIA to enhance its CaLLM language models, optimizing in-vehicle assistant performance and AI deployment. The collaboration aims to improve driver safety, productivity, and user experience, contributing to faster, more reliable interactions. Cerence Inc.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2025/01/03/Artificial-Intelligence-ai-machine-Learn.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "General",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.5'}, {'topic': 'Financial Markets', 'relevance_score': '0.108179'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.505664,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.516316', 'ticker_sentiment_score': '0.48732', 'ticker_sentiment_label': 'Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 3
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Rivian Automotive, Cerence, Nu Skin Enterprises And Other Big Stocks Moving Higher On Friday - Archer Aviation  ( NYSE:ACHR ) , Amprius Technologies  ( NYSE:AMPX ) ",
+            "url": "https://www.benzinga.com/news/25/01/42788291/rivian-automotive-cerence-nu-skin-enterprises-and-other-big-stocks-moving-higher-on-friday",
+            "time_published_str": "20250103T152218",
+            "time_published_iso": "2025-01-03T15:22:18+00:00",
+            "authors": "['Avi Kapoor']",
+            "summary": "U.S. stocks were higher, with the Dow Jones index gaining over 100 points on Friday. Shares of Rivian Automotive, Inc. RIVN rose sharply during Friday's session. The company disclosed its production and delivery figures for the fourth quarter and full-year 2024.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2025/01/03/Rivian-R3.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "Trading",
+            "topics": "[{'topic': 'Life Sciences', 'relevance_score': '0.166667'}, {'topic': 'Energy & Transportation', 'relevance_score': '0.166667'}, {'topic': 'Technology', 'relevance_score': '0.166667'}, {'topic': 'Retail & Wholesale', 'relevance_score': '0.166667'}, {'topic': 'Financial Markets', 'relevance_score': '0.214378'}, {'topic': 'Manufacturing', 'relevance_score': '0.166667'}, {'topic': 'Earnings', 'relevance_score': '0.158519'}, {'topic': 'Real Estate & Construction', 'relevance_score': '0.166667'}]",
+            "overall_sentiment_score": 0.248583,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.102013', 'ticker_sentiment_score': '0.092927', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 4
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Nasdaq Surges Over 1%; Cerence Shares Spike Higher - Carmell  ( NASDAQ:CTCX ) , Cerence  ( NASDAQ:CRNC ) ",
+            "url": "https://www.benzinga.com/25/01/42791359/nasdaq-surges-over-100-points-cerence-shares-spike-higher",
+            "time_published_str": "20250103T170212",
+            "time_published_iso": "2025-01-03T17:02:12+00:00",
+            "authors": "['Avi Kapoor']",
+            "summary": "U.S. stocks traded higher midway through trading, with the Nasdaq Composite surging more than 1% on Friday. The Dow traded up 0.61% to 42,648.40 while the NASDAQ gained 1.44% to 19,559.00. The S&P 500 also rose, gaining, 1.07% to 5,931.10. Utilities shares jumped by 1.2% on Friday.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2025/01/03/Wall-Street-ai7-1.png?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "Trading",
+            "topics": "[{'topic': 'Life Sciences', 'relevance_score': '0.333333'}, {'topic': 'Financial Markets', 'relevance_score': '0.929393'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Technology', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.160318,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.107495', 'ticker_sentiment_score': '0.091179', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 5
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Tesla Analysts Fear 'Stormy Weather' In Short Term - Tesla  ( NASDAQ:TSLA ) ",
+            "url": "https://www.benzinga.com/analyst-ratings/analyst-color/25/01/42792642/tesla-analysts-on-deliveries-ev-stock-could-have-stormy-weather-in-short-term-gener",
+            "time_published_str": "20250103T175411",
+            "time_published_iso": "2025-01-03T17:54:11+00:00",
+            "authors": "['Chris Katje']",
+            "summary": "Tesla Inc TSLA analysts are cautious after fourth-quarter deliveries came in below consensus estimates and production fell below delivery figures. The Tesla Analysts: Canaccord Genuity analyst George Gianarikas maintained a Buy rating on Tesla. He also raised the price target from $298 to $404.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2025/01/03/Why-It-Matters_0.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "Trading",
+            "topics": "[{'topic': 'Financial Markets', 'relevance_score': '0.266143'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}, {'topic': 'Earnings', 'relevance_score': '0.967321'}, {'topic': 'Technology', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.01198,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.053992', 'ticker_sentiment_score': '0.170793', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 6
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "What Lies Ahead for Apple Stock & ETFs in 2025?",
+            "url": "https://www.zacks.com/stock/news/2391829/what-lies-ahead-for-apple-stock-etfs-in-2025",
+            "time_published_str": "20250103T180000",
+            "time_published_iso": "2025-01-03T18:00:00+00:00",
+            "authors": "['Sanghamitra Saha']",
+            "summary": "Apple stock has gained momentum lately due to the addition of ChatGPT and other AI features for its devices and the launch of the new MacBook Pro lineup.",
+            "banner_image": "https://staticx-tuner.zacks.com/images/articles/main/87/3588.jpg",
+            "source": "Zacks Commentary",
+            "source_domain": "www.zacks.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.333333'}, {'topic': 'Economy - Monetary', 'relevance_score': '0.310843'}, {'topic': 'Economy - Fiscal', 'relevance_score': '0.158519'}, {'topic': 'Retail & Wholesale', 'relevance_score': '0.333333'}, {'topic': 'Financial Markets', 'relevance_score': '0.990893'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.158519'}]",
+            "overall_sentiment_score": 0.228533,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.140896', 'ticker_sentiment_score': '0.193906', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 7
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Is it Wise to Retain Equinix Stock in Your Portfolio Right Now?",
+            "url": "https://www.zacks.com/stock/news/2391834/is-it-wise-to-retain-equinix-stock-in-your-portfolio-right-now",
+            "time_published_str": "20250103T182200",
+            "time_published_iso": "2025-01-03T18:22:00+00:00",
+            "authors": "['Zacks Equity Research']",
+            "summary": "EQIX's global data center portfolio is set to gain from solid demand for interconnected data center infrastructure. High competition and interest expenses ail.",
+            "banner_image": "https://staticx-tuner.zacks.com/images/articles/main/a0/9855.jpg",
+            "source": "Zacks Commentary",
+            "source_domain": "www.zacks.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Economy - Monetary', 'relevance_score': '0.310843'}, {'topic': 'Financial Markets', 'relevance_score': '0.684621'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.108179'}, {'topic': 'Real Estate & Construction', 'relevance_score': '0.333333'}, {'topic': 'Technology', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.324754,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.056808', 'ticker_sentiment_score': '0.164973', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 8
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Nvidia's $2 Trillion AI Rally In 2024 Fueled by Chips, Startups, and Robotics - NVIDIA  ( NASDAQ:NVDA ) ",
+            "url": "https://www.benzinga.com/25/01/42793394/nvidias-2-trillion-ai-rally-fueled-by-chips-startups-and-robotics",
+            "time_published_str": "20250103T182831",
+            "time_published_iso": "2025-01-03T18:28:31+00:00",
+            "authors": "['Anusuya Lahiri']",
+            "summary": "The artificial intelligence frenzy and demand for its AI-centric chips catapulted Nvidia Corp NVDA into the trillion-dollar market cap club for 2024. It lags behind Apple Inc AAPL, which was backed by investor curiosity over its potential AI offerings, turbocharging its iPhone sales.",
+            "banner_image": "https://cdn.benzinga.com/files/images/story/2025/01/03/Nvidia-CEO-Jensen-Huang.jpeg?width=1200&height=800&fit=crop",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "News",
+            "topics": "[{'topic': 'Economy - Monetary', 'relevance_score': '0.158519'}, {'topic': 'Financial Markets', 'relevance_score': '0.858979'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}, {'topic': 'Technology', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.158815,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.537474', 'ticker_sentiment_score': '0.05317', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 9
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Nvidia Shares Are On The Rise Today: What's Going On? - NVIDIA  ( NASDAQ:NVDA ) ",
+            "url": "https://www.benzinga.com/trading-ideas/movers/25/01/42794609/nvidia-shares-are-on-the-rise-today-whats-going-on-2",
+            "time_published_str": "20250103T194453",
+            "time_published_iso": "2025-01-03T19:44:53+00:00",
+            "authors": "['Vaishali Prayag']",
+            "summary": "Nvidia shares rose 4.55%, driven by strong demand in AI and chip sectors, bolstered by collaborations like the one with Cerence. HIVE Digital invested $30 million in Nvidia GPU clusters to expand its high-performance computing and AI capabilities.",
+            "banner_image": "https://editorial-assets.benzinga.com/wp-content/uploads/2025/01/03134636/Screenshot-2025-01-03-at-13.45.50-1024x531.png",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "News",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.5'}, {'topic': 'Financial Markets', 'relevance_score': '0.214378'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.37664,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.892763', 'ticker_sentiment_score': '0.666512', 'ticker_sentiment_label': 'Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 10
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Why Tesla Stock Is Surging Today",
+            "url": "https://www.fool.com/investing/2025/01/03/why-tesla-stock-is-surging-today/",
+            "time_published_str": "20250103T202913",
+            "time_published_iso": "2025-01-03T20:29:13+00:00",
+            "authors": "['Keith Noonan']",
+            "summary": "Tesla ( NASDAQ: TSLA ) stock is seeing strong bullish momentum in Friday's trading. The electric vehicle ( EV ) company's share price was up 6.9% as of 3:15 p.m. ET amid the backdrop of a 1.2% gain for the S&P 500 index and a 1.7% gain for the Nasdaq Composite index.In addition to bullish ...",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802819/gettyimages-1200037244.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Financial Markets', 'relevance_score': '0.266143'}, {'topic': 'Manufacturing', 'relevance_score': '1.0'}]",
+            "overall_sentiment_score": 0.324518,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.090474', 'ticker_sentiment_score': '0.130762', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 11
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "CRNC Short Squeeze Analysis  ( 5 Attributed to Look for ) ",
+            "url": "https://www.zacks.com/commentary/2391854/crnc-short-squeeze-analysis-5-attributed-to-look-for",
+            "time_published_str": "20250103T204900",
+            "time_published_iso": "2025-01-03T20:49:00+00:00",
+            "authors": "['Andrew Rocco']",
+            "summary": "Short squeezes are on of the most rewarding set ups. Luckily, investors can learn the ingredients behind these breathtaking moves with some studying.",
+            "banner_image": "https://staticx-tuner.zacks.com/images/default_article_images/default238.jpg",
+            "source": "Zacks Commentary",
+            "source_domain": "www.zacks.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.5'}, {'topic': 'Financial Markets', 'relevance_score': '0.962106'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.145494,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.226301', 'ticker_sentiment_score': '0.107349', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 12
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Why AI Chip Stocks Nvidia, Taiwan Semiconductor Manufacturing, and Arm Holdings Rallied Today",
+            "url": "https://www.fool.com/investing/2025/01/03/why-ai-chip-stocks-nvidia-taiwan-semiconductor-man/",
+            "time_published_str": "20250103T213730",
+            "time_published_iso": "2025-01-03T21:37:30+00:00",
+            "authors": "['Billy Duberstein']",
+            "summary": "Shares of artificial intelligence ( AI ) semiconductor stocks Nvidia ( NASDAQ: NVDA ) , Taiwan Semiconductor Manufacturing ( NYSE: TSM ) , and Arm Holdings ( NASDAQ: ARM ) rallied on Friday, up 4.5%, 3.5%, and 10.1%, respectively, in Friday trading.These three companies are each big ...",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802825/gettyimages-1419726675.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Economy - Monetary', 'relevance_score': '0.158519'}, {'topic': 'Financial Markets', 'relevance_score': '0.214378'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}, {'topic': 'Technology', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.152585,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.59928', 'ticker_sentiment_score': '0.186432', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 13
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Heavy Money Flows In Quantum Computing Stocks, Blind Money Saves The Market, Bitcoin Outflows - Arqit Quantum  ( NASDAQ:ARQQ ) ",
+            "url": "https://www.benzinga.com/trading-ideas/25/01/42798659/heavy-money-flows-in-quantum-computing-stocks-blind-money-saves-the-market-bitcoin-outflows",
+            "time_published_str": "20250103T214349",
+            "time_published_iso": "2025-01-03T21:43:49+00:00",
+            "authors": "['The Arora Report']",
+            "summary": "To gain an edge, this is what you need to know today. An enlarged chart of SPDR S&P 500 ETF Trust which represents the benchmark stock market index S&P 500 ( SPX ) . We shared with readers in yesterday's Morning Capsule, Apple Inc iPhones are on the decline in China.",
+            "banner_image": "https://thearorareport.com/wp-content/uploads/2025/01/2025-01-03_09h03_04.png",
+            "source": "Benzinga",
+            "source_domain": "www.benzinga.com",
+            "category_within_source": "Trading",
+            "topics": "[{'topic': 'Economy - Monetary', 'relevance_score': '0.310843'}, {'topic': 'Financial Markets', 'relevance_score': '1.0'}, {'topic': 'Manufacturing', 'relevance_score': '0.25'}, {'topic': 'Real Estate & Construction', 'relevance_score': '0.25'}, {'topic': 'Technology', 'relevance_score': '0.25'}, {'topic': 'Finance', 'relevance_score': '0.25'}]",
+            "overall_sentiment_score": 0.14967,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.118064', 'ticker_sentiment_score': '0.012926', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 14
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Nvidia Stock Jumped Today -- Is the Artificial Intelligence  ( AI )  Leader a Buy for 2025?",
+            "url": "https://www.fool.com/investing/2025/01/03/nvidia-stock-jumped-today-ai-leader-a-buy-2025/",
+            "time_published_str": "20250103T214725",
+            "time_published_iso": "2025-01-03T21:47:25+00:00",
+            "authors": "['Keith Noonan']",
+            "summary": "Nvidia stock has skyrocketed 200% over the last year. Can the AI frontrunner serve up more wins in 2025 and beyond?",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802823/gettyimages-1473086836.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.5'}, {'topic': 'Financial Markets', 'relevance_score': '0.5855'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.403234,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.767999', 'ticker_sentiment_score': '0.612844', 'ticker_sentiment_label': 'Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 15
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "\"Rule Breaker Investing\" Mailbag: Portfolio-Level Thinking",
+            "url": "https://www.fool.com/investing/2025/01/03/rule-breaker-investing-mailbag-portfolio-level-thi/",
+            "time_published_str": "20250103T222500",
+            "time_published_iso": "2025-01-03T22:25:00+00:00",
+            "authors": "['Motley Fool Staff']",
+            "summary": "From a preschool teacher newly inspired to invest at 73 to a lifelong Fool whose Microsoft shares became a 500-bagger, this year-end mailbag edition brims with transformational stories.",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802559/rbi-copy.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Life Sciences', 'relevance_score': '0.2'}, {'topic': 'Energy & Transportation', 'relevance_score': '0.2'}, {'topic': 'Technology', 'relevance_score': '0.2'}, {'topic': 'Retail & Wholesale', 'relevance_score': '0.2'}, {'topic': 'Financial Markets', 'relevance_score': '1.0'}, {'topic': 'Manufacturing', 'relevance_score': '0.2'}, {'topic': 'Earnings', 'relevance_score': '0.158519'}]",
+            "overall_sentiment_score": 0.255369,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.017547', 'ticker_sentiment_score': '0.007203', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 16
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Prediction: This Will Be the First Artificial Intelligence  ( AI )  Stock To Reach a $4 Trillion Valuation in 2025",
+            "url": "https://www.fool.com/investing/2025/01/03/prediction-this-will-be-the-first-artificial-intel/",
+            "time_published_str": "20250103T223800",
+            "time_published_iso": "2025-01-03T22:38:00+00:00",
+            "authors": "['Adam Spatacco']",
+            "summary": "Three companies currently boast a market cap over $3 trillion, and I think one of them will reach the $4 trillion mark sooner than later.",
+            "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F802522%2Fgettyimages-1408715303-4.jpg&op=resize&w=700",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.5'}, {'topic': 'Financial Markets', 'relevance_score': '0.316726'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.29732,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.759278', 'ticker_sentiment_score': '0.484967', 'ticker_sentiment_label': 'Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 17
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Why Super Micro Computer Stock Surged Today",
+            "url": "https://www.fool.com/investing/2025/01/03/why-super-micro-computer-stock-surged-today/",
+            "time_published_str": "20250103T233400",
+            "time_published_iso": "2025-01-03T23:34:00+00:00",
+            "authors": "['Keith Noonan']",
+            "summary": "Super Micro Computer ( NASDAQ: SMCI ) stock posted big gains in Friday's trading. The server specialist's share price closed out the day's trading up 10.9% amid gains of 1.2% for the S&P 500 index and 1.7% for the Nasdaq Composite index.In addition to bullish momentum for the broader market ...",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802857/gettyimages-1550670587.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Financial Markets', 'relevance_score': '0.459462'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}, {'topic': 'Earnings', 'relevance_score': '0.310843'}, {'topic': 'Technology', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.153829,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.080458', 'ticker_sentiment_score': '0.187139', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 18
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Cramer's week ahead: nonfarm payrolls, PMI and earnings from Albertsons",
+            "url": "https://www.cnbc.com/2025/01/03/cramers-week-ahead-nonfarm-payrolls-pmi-and-earnings-from-albertsons.html",
+            "time_published_str": "20250103T234352",
+            "time_published_iso": "2025-01-03T23:43:52+00:00",
+            "authors": "[]",
+            "summary": "CNBC's Jim Cramer on Friday walked investors through next week's market action.",
+            "source": "CNBC",
+            "source_domain": "www.cnbc.com",
+            "category_within_source": "Top News",
+            "topics": "[{'topic': 'Economy - Monetary', 'relevance_score': '0.158519'}, {'topic': 'Financial Markets', 'relevance_score': '0.744043'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.310843'}, {'topic': 'Technology', 'relevance_score': '0.333333'}, {'topic': 'Finance', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.11241,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.136499', 'ticker_sentiment_score': '0.137571', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 19
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Prediction: 2 AI Stocks Will Be Worth More Than Apple Stock by the Year's End in 2025",
+            "url": "https://www.fool.com/investing/2025/01/04/2-ai-stocks-worth-more-than-apple-stock-end-2025/",
+            "time_published_str": "20250104T090000",
+            "time_published_iso": "2025-01-04T09:00:00+00:00",
+            "authors": "['Trevor Jennewine']",
+            "summary": "Apple had a market value of $3.7 trillion as of Dec. 31, making it the most valuable U.S. company, a title it has held for the better part of the last decade. But Apple has yet to demonstrate its ability to monetize artificial intelligence, at least not to the same degree as other big tech ...",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802626/investor-31.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Retail & Wholesale', 'relevance_score': '0.333333'}, {'topic': 'Financial Markets', 'relevance_score': '0.266143'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.998311'}, {'topic': 'Technology', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.341831,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.486627', 'ticker_sentiment_score': '0.432086', 'ticker_sentiment_label': 'Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 20
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Here's the Smartest Way to Invest in the S&P 500 in January",
+            "url": "https://www.fool.com/investing/2025/01/04/heres-the-smartest-way-to-invest-in-sp-500-now/",
+            "time_published_str": "20250104T091000",
+            "time_published_iso": "2025-01-04T09:10:00+00:00",
+            "authors": "['Adria Cimino']",
+            "summary": "Last year was a fantastic one for stocks and stock market investors. The S&P 500 ( SNPINDEX: ^GSPC ) roared into the new year, confirming a bull market, and finished 2024 with a double-digit gain. This is after already advancing 24% in the previous year.Though stocks across industries climbed, ...",
+            "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F802475%2Fgettyimages-936284004.jpg&op=resize&w=700",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Economy - Monetary', 'relevance_score': '0.158519'}, {'topic': 'Financial Markets', 'relevance_score': '0.999894'}, {'topic': 'Manufacturing', 'relevance_score': '0.5'}, {'topic': 'Technology', 'relevance_score': '0.5'}]",
+            "overall_sentiment_score": 0.392579,
+            "overall_sentiment_label": "Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.059488', 'ticker_sentiment_score': '0.301201', 'ticker_sentiment_label': 'Somewhat-Bullish'}]"
+          },
+          "pairedItem": {
+            "item": 21
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "My Top Artificial Intelligence  ( AI )  Stock to Buy for 2025  ( Hint: It's Not Nvidia ) ",
+            "url": "https://www.fool.com/investing/2025/01/04/my-top-artificial-intelligence-ai-stock-to-buy-for/",
+            "time_published_str": "20250104T093500",
+            "time_published_iso": "2025-01-04T09:35:00+00:00",
+            "authors": "['Prosper Junior Bakiny']",
+            "summary": "Everyone wants a piece of the artificial intelligence ( AI ) market. Since ChatGPT's release, AI has grabbed countless headlines on Wall Street and helped many companies rise in prominence. There are many options for investors looking to cash in, and no doubt many already have.But which AI stock ...",
+            "banner_image": "https://g.foolcdn.com/editorial/images/802432/person-sitting-at-a-desk-looking-at-two-monitors.jpg",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Retail & Wholesale', 'relevance_score': '0.333333'}, {'topic': 'Financial Markets', 'relevance_score': '0.161647'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.495866'}, {'topic': 'Technology', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.218453,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.062597', 'ticker_sentiment_score': '0.065559', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 22
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "The Stock Market Just Did Something It Hasn't Done Since the Dot-Com Bubble in 1998. Here's What Could Happen in 2025.",
+            "url": "https://www.fool.com/investing/2025/01/04/the-stock-market-did-the-dot-com-1998-happen-2025/",
+            "time_published_str": "20250104T094700",
+            "time_published_iso": "2025-01-04T09:47:00+00:00",
+            "authors": "['Anthony Di Pizio']",
+            "summary": "The S&P 500 ( SNPINDEX: ^GSPC ) delivered a total return ( including dividends ) of 25% in 2024, which followed a gain of 26% in 2023. The index only delivered back-to-back annual returns of at least 25% on one other occasion since it was established in 1957.",
+            "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F802599%2Fgold-bull-and-bear-figurines-placed-on-top-of-a-smartphone-with-a-stock-trading-app-on-the-screen.jpg&op=resize&w=700",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Technology', 'relevance_score': '0.25'}, {'topic': 'Finance', 'relevance_score': '0.25'}, {'topic': 'Economy - Monetary', 'relevance_score': '0.158519'}, {'topic': 'Retail & Wholesale', 'relevance_score': '0.25'}, {'topic': 'Financial Markets', 'relevance_score': '0.999896'}, {'topic': 'Manufacturing', 'relevance_score': '0.25'}, {'topic': 'Earnings', 'relevance_score': '0.938793'}]",
+            "overall_sentiment_score": 0.143429,
+            "overall_sentiment_label": "Neutral",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.128135', 'ticker_sentiment_score': '0.086457', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 23
+          }
+        }
+      },
+      {
+        "json": {
+          "json": {
+            "title": "Worried About \"Magnificent Seven\" Volatility in 2025? The Vanguard Mega Cap Value ETF Might Be the Answer.",
+            "url": "https://www.fool.com/investing/2025/01/04/worried-about-magnificent-seven-volatility-in-2025/",
+            "time_published_str": "20250104T111100",
+            "time_published_iso": "2025-01-04T11:11:00+00:00",
+            "authors": "['Reuben Gregg Brewer']",
+            "summary": "The Roundhill Magnificent Seven ETF ( NASDAQ: MAGS ) rose around 65% in 2024, nearly three times the gain of the S&P 500 index ( SNPINDEX: ^GSPC ) . As the exchange-traded fund's name suggests, it owns just seven stocks Nvidia, Meta Platforms, Alphabet, Amazon.com, Microsoft, Apple, and Tesla, ...",
+            "banner_image": "https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F802528%2F22_05_25-a-giant-person-breaking-through-the-ceiling-of-a-living-room-_gettyimages-1089786990.jpg&op=resize&w=700",
+            "source": "Motley Fool",
+            "source_domain": "www.fool.com",
+            "category_within_source": "n/a",
+            "topics": "[{'topic': 'Financial Markets', 'relevance_score': '0.9973'}, {'topic': 'Manufacturing', 'relevance_score': '0.333333'}, {'topic': 'Earnings', 'relevance_score': '0.158519'}, {'topic': 'Technology', 'relevance_score': '0.333333'}, {'topic': 'Finance', 'relevance_score': '0.333333'}]",
+            "overall_sentiment_score": 0.240236,
+            "overall_sentiment_label": "Somewhat-Bullish",
+            "ticker_sentiment": "[{'ticker': 'NVDA', 'relevance_score': '0.057628', 'ticker_sentiment_score': '0.129051', 'ticker_sentiment_label': 'Neutral'}]"
+          },
+          "pairedItem": {
+            "item": 24
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Summary Analyst I",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Summary Analyst I",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Summary Analyst I",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1a8fbffd-144d-4ff9-95c8-7cc2776bbb71",
+  "meta": {
+    "instanceId": "2ae2c89981039340d829937460d45406e20e1fe8706abd573e37b0e7483da8c4"
+  },
+  "id": "HDMmeLWfjL5lR37P",
+  "tags": []
+}

@@ -1,0 +1,117 @@
+{
+  "name": "MSFT Summary Analyst I",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -20,
+        -100
+      ],
+      "id": "f73f3c31-75de-4a26-9fe9-cc8cedd84fd1",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ],
+      "id": "48a3a7ae-d535-4c1f-aee5-9b68315901b0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uTsz7TkqIJt7gW5q",
+          "name": "Google Gemini Paid API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.json.title }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        348,
+        120
+      ],
+      "id": "ae341daf-8d0b-46c1-a108-6e860beaac25",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Title: {{ $json.json.title }}\nContent: {{ $json.json.summary }}",
+        "options": {
+          "systemMessage": "{\n  \"instruction\": \"You are a summary agent specialized in processing news articles to produce neutral, informative summaries and sentiment analysis.\",\n  \"context\": \"You will receive a list of news articles, each containing a title and full content.\",\n  \"input\": \"An array of objects, each with:\\n  • title: string\\n  • content: string\",\n  \"output\": \"Return an array of objects, each with:\\n  • title: the original title\\n  • summary: a concise, precise, and neutral summary of the article’s key points\\n  • sentiment: one of [“Positive”, “Neutral”, “Negative”] reflecting the overall tone of the article\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        200,
+        -100
+      ],
+      "id": "3f09a72d-9989-4976-bc5b-0b92dde780df",
+      "name": "Summary Analyst I"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Summary Analyst I",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Summary Analyst I",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Summary Analyst I",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0972e9ab-869c-43ab-a832-f7edb1936b7e",
+  "meta": {
+    "instanceId": "2ae2c89981039340d829937460d45406e20e1fe8706abd573e37b0e7483da8c4"
+  },
+  "id": "ZRGfOqd08zNziOcg",
+  "tags": []
+}
